@@ -444,11 +444,14 @@ func (s *Server) Router() http.Handler {
 	// Public SSO status (reads GoTrue settings; OAuth flows use GoTrue directly).
 	r.Get("/auth/sso/status", s.handleSSOStatus)
 
-	// Local (password) auth. Not yet used by any client - GoTrue still owns
-	// the live login flow until the frontend/mobile clients are repointed.
+	// Local (password) auth.
 	r.Post("/auth/login", s.handleLogin)
 	r.Post("/auth/refresh", s.handleRefresh)
 	r.Post("/auth/logout", s.handleLogout)
+
+	// Native Azure AD (Entra ID) SSO - replaces GoTrue's OAuth proxy.
+	r.Get("/auth/azure/start", s.handleAzureStart)
+	r.Get("/auth/azure/callback", s.handleAzureCallback)
 
 	return r
 }

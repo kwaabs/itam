@@ -14,11 +14,9 @@ type Config struct {
 	RedisPass   string
 	NATSURL     string
 
-	// GoTrue owns authentication. We validate its JWTs and (optionally) call
-	// its admin API to bootstrap the first admin user.
-	GoTrueURL       string
+	// GoTrueJWTSecret signs/verifies our own locally-issued tokens (name kept
+	// for now - GoTrue itself is still running until it's fully retired).
 	GoTrueJWTSecret string
-	AzureEnabled    bool
 
 	// Object storage (RustFS, S3-compatible) for attachments.
 	S3Endpoint  string
@@ -54,9 +52,7 @@ func Load() Config {
 		RedisPass:   env("REDIS_PASSWORD", ""),
 		NATSURL:     env("NATS_URL", "nats://localhost:5602"),
 
-		GoTrueURL:       env("GOTRUE_URL", "http://localhost:5606"),
 		GoTrueJWTSecret: env("GOTRUE_JWT_SECRET", "super-secret-jwt-token-with-at-least-32-characters-long"),
-		AzureEnabled:    strings.EqualFold(env("AZURE_ENABLED", "false"), "true"),
 
 		S3Endpoint:  env("S3_ENDPOINT", "http://localhost:5604"),
 		S3Region:    env("S3_REGION", "us-east-1"),

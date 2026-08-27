@@ -510,9 +510,8 @@ func (s *Server) handleReportSetupHealth(w http.ResponseWriter, r *http.Request)
 	).Scan(ctx, &dqChannelReady)
 	add("data_quality_alerts", "Data quality alerts (channel configured)", "/notifications", dqCheckEnabled && dqChannelReady, 0)
 
-	var ssoReady bool
-	ssoReady = s.gotrueAzureEnabled(ctx)
-	add("azure_sso", "Microsoft Entra ID SSO configured (GoTrue)", "/admin", ssoReady, 0)
+	ssoReady := s.azureSSOEnabled(ctx)
+	add("azure_sso", "Microsoft Entra ID SSO configured", "/admin", ssoReady, 0)
 
 	okCount := 0
 	for _, it := range items {

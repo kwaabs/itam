@@ -60,16 +60,25 @@ type Principal struct {
 	IsSuperuser bool      `json:"is_superuser"`
 }
 
+// SettingsReader is the subset of settings.Service that Azure SSO config
+// (tenant/client id/secret, all editable at runtime without a redeploy)
+// needs. Declared here rather than importing internal/settings so this
+// package doesn't depend on the settings package's storage/caching details.
+type SettingsReader interface {
+	GetOr(ctx context.Context, key, fallback string) string
+}
+
 // Service validates GoTrue tokens and provisions app profiles just-in-time.
 type Service struct {
 	cfg         config.Config
 	db          *bun.DB
 	log         *slog.Logger
+	set         SettingsReader
 	provisioned sync.Map // userID -> struct{}
 }
 
-func New(cfg config.Config, db *bun.DB, log *slog.Logger) *Service {
-	return &Service{cfg: cfg, db: db, log: log}
+func New(cfg config.Config, db *bun.DB, log *slog.Logger, set SettingsReader) *Service {
+	return &Service{cfg: cfg, db: db, log: log, set: set}
 }
 
 // Middleware authenticates the request and attaches the Principal to context.
