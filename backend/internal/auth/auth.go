@@ -1,13 +1,11 @@
 package auth
 
 import (
-	"bytes"
 	"context"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
-	"encoding/json"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -202,49 +200,46 @@ func FromContext(ctx context.Context) (*Principal, bool) {
 	return p, ok
 }
 
-// BootstrapAdmin best-effort creates the configured admin user in GoTrue so the
-// instance is usable out of the box. Idempotent; tolerant of GoTrue not being
-// ready yet (retries a few times). Superuser/role wiring happens via JIT
-// provisioning on first login.
+// BootstrapAdmin idempotently creates the configured admin user directly in
+// iam.user_profiles so the instance is usable out of the box, and grants it
+// the admin role. Safe to call on every startup.
 func (s *Service) BootstrapAdmin(ctx context.Context) {
 	if s.cfg.AdminEmail == "" || s.cfg.AdminPassword == "" {
 		return
 	}
-	token, err := s.serviceToken()
+	hash, err := HashPassword(s.cfg.AdminPassword)
 	if err != nil {
-		s.log.Warn("could not mint service token for bootstrap", "err", err)
+		s.log.Error("could not hash bootstrap admin password", "err", err)
 		return
 	}
-	body, _ := json.Marshal(map[string]any{
-		"email":         s.cfg.AdminEmail,
-		"password":      s.cfg.AdminPassword,
-		"email_confirm": true,
-	})
-	url := strings.TrimRight(s.cfg.GoTrueURL, "/") + "/admin/users"
 
-	for attempt := 1; attempt <= 10; attempt++ {
-		req, _ := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
-		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Authorization", "Bearer "+token)
-		client := &http.Client{Timeout: 5 * time.Second}
-		resp, err := client.Do(req)
-		if err != nil {
-			time.Sleep(3 * time.Second)
-			continue
-		}
-		status := resp.StatusCode
-		_ = resp.Body.Close()
-		switch {
-		case status >= 200 && status < 300:
-			s.log.Info("bootstrap admin user created in GoTrue", "email", s.cfg.AdminEmail)
+	profile := &domain.UserProfile{
+		UserID:       uuid.New(),
+		Email:        s.cfg.AdminEmail,
+		PasswordHash: hash,
+		IsSuperuser:  true,
+		IsActive:     true,
+	}
+	res, err := s.db.NewInsert().Model(profile).On("CONFLICT (email) DO NOTHING").Exec(ctx)
+	if err != nil {
+		s.log.Error("bootstrap admin insert failed", "err", err)
+		return
+	}
+	userID := profile.UserID
+	if n, _ := res.RowsAffected(); n == 0 {
+		s.log.Info("bootstrap admin user already exists", "email", s.cfg.AdminEmail)
+		var existing domain.UserProfile
+		if err := s.db.NewSelect().Model(&existing).Where("email = ?", s.cfg.AdminEmail).Scan(ctx); err != nil {
+			s.log.Error("could not look up existing bootstrap admin", "err", err)
 			return
-		case status == http.StatusConflict || status == http.StatusUnprocessableEntity:
-			s.log.Info("bootstrap admin user already exists", "email", s.cfg.AdminEmail)
-			return
-		default:
-			s.log.Warn("bootstrap admin attempt failed", "status", status, "attempt", attempt)
-			time.Sleep(3 * time.Second)
 		}
+		userID = existing.UserID
+	} else {
+		s.log.Info("bootstrap admin user created", "email", s.cfg.AdminEmail)
+	}
+
+	if err := s.ensureAdminGrant(ctx, userID); err != nil {
+		s.log.Error("bootstrap admin role grant failed", "err", err)
 	}
 }
 
@@ -358,18 +353,4 @@ func generateOpaqueToken() (string, error) {
 func hashToken(token string) string {
 	sum := sha256.Sum256([]byte(token))
 	return hex.EncodeToString(sum[:])
-}
-
-// serviceToken mints a short-lived service_role JWT GoTrue accepts on its admin
-// API (it is signed with the shared secret).
-func (s *Service) serviceToken() (string, error) {
-	claims := jwt.MapClaims{
-		"role": "service_role",
-		"sub":  "00000000-0000-0000-0000-000000000000",
-		"iss":  "itam-bootstrap",
-		"exp":  time.Now().Add(10 * time.Minute).Unix(),
-		"iat":  time.Now().Unix(),
-	}
-	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return t.SignedString([]byte(s.cfg.GoTrueJWTSecret))
 }
