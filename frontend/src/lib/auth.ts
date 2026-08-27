@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { API_URL, GOTRUE_URL } from './config';
+import { API_URL } from './config';
 import { session } from './session';
 
 // Email/password login against the API's local auth (see backend/internal/auth).
@@ -20,10 +20,10 @@ export async function login(email: string, password: string): Promise<void> {
 	});
 }
 
-// Microsoft Entra ID SSO via GoTrue (same OAuth flow as Supabase Auth).
+// Microsoft Entra ID SSO, handled natively by the API (see backend/internal/auth/azure.go).
 export function azureLogin(): void {
 	const returnTo = encodeURIComponent(window.location.origin);
-	window.location.href = `${GOTRUE_URL}/authorize?provider=azure&redirect_to=${returnTo}`;
+	window.location.href = `${API_URL}/auth/azure/start?redirect_to=${returnTo}`;
 }
 
 // Whether GoTrue has Azure AD enabled (proxied via API to avoid browser CORS).
