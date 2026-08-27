@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 import 'oauth_common.dart';
 
-/// Reads `#access_token=…` from the current URL after GoTrue OAuth callback.
+/// Reads `#access_token=…` from the current URL after the Azure OAuth callback.
 String? takeHashAccessToken() {
   final hash = html.window.location.hash;
   if (hash.isEmpty || !hash.startsWith('#')) return null;
@@ -18,13 +18,10 @@ String? takeHashAccessToken() {
 
 String? currentAppOrigin() => html.window.location.origin;
 
-void startAzureLogin(String gotrueUrl, String returnTo) {
-  final base = gotrueUrl.replaceAll(RegExp(r'/+$'), '');
-  final q = Uri(queryParameters: {
-    'provider': 'azure',
-    'redirect_to': returnTo,
-  }).query;
-  html.window.location.assign('$base/authorize?$q');
+void startAzureLogin(String apiBaseUrl, String returnTo) {
+  final base = apiBaseUrl.replaceAll(RegExp(r'/+$'), '');
+  final q = Uri(queryParameters: {'redirect_to': returnTo}).query;
+  html.window.location.assign('$base/auth/azure/start?$q');
 }
 
 Future<bool> azureLoginEnabled(String apiBaseUrl) async {
@@ -38,11 +35,11 @@ Future<bool> azureLoginEnabled(String apiBaseUrl) async {
   }
 }
 
-Future<AzureLoginOutcome> completeAzureLogin(String gotrueUrl) async {
+Future<AzureLoginOutcome> completeAzureLogin(String apiBaseUrl) async {
   final origin = currentAppOrigin();
   if (origin == null || origin.isEmpty) {
     return AzureLoginOutcome.error('Could not determine app origin');
   }
-  startAzureLogin(gotrueUrl, origin);
+  startAzureLogin(apiBaseUrl, origin);
   return AzureLoginOutcome.cancelled();
 }

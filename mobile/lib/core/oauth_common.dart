@@ -1,4 +1,4 @@
-/// Result of a GoTrue Azure AD sign-in attempt on native platforms.
+/// Result of an Azure AD sign-in attempt on native platforms.
 class AzureLoginOutcome {
   final String? token;
   final String? refreshToken;

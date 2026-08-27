@@ -9,7 +9,7 @@ import 'oauth_redirect.dart' as oauth;
 
 enum AppStatus { loading, needsSetup, needsLogin, ready }
 
-/// Central app store: connection config, GoTrue tokens, the authenticated Dio
+/// Central app store: connection config, auth tokens, the authenticated Dio
 /// client, and the current user's permissions. Screens read this via provider.
 class AppController extends ChangeNotifier {
   AppController();
@@ -37,10 +37,9 @@ class AppController extends ChangeNotifier {
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
     final api = prefs.getString('api_base_url');
-    final gotrue = prefs.getString('gotrue_url');
     final configured = prefs.getBool('configured') ?? false;
-    if (configured && api != null && gotrue != null) {
-      _config = AppConfig(apiBaseUrl: api, gotrueUrl: gotrue);
+    if (configured && api != null) {
+      _config = AppConfig(apiBaseUrl: api);
     }
     _buildDio();
 
@@ -112,7 +111,6 @@ class AppController extends ChangeNotifier {
     _config = cfg;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('api_base_url', cfg.apiBaseUrl.trim());
-    await prefs.setString('gotrue_url', cfg.gotrueUrl.trim());
     await prefs.setBool('configured', true);
     _buildDio();
     _set(_accessToken == null ? AppStatus.needsLogin : AppStatus.ready);
@@ -153,11 +151,12 @@ class AppController extends ChangeNotifier {
     if (origin == null || origin.isEmpty) {
       throw UnsupportedError('Azure AD sign-in requires a valid return URL');
     }
-    oauth.startAzureLogin(_config.gotrueUrl, origin);
+    oauth.startAzureLogin(_config.apiBaseUrl, origin);
   }
 
-  /// Microsoft SSO through GoTrue. On web the browser navigates away; on native
-  /// the system browser returns a GoTrue token via the itam:// deep link.
+  /// Microsoft SSO through the API's native Azure OIDC client. On web the
+  /// browser navigates away; on native the system browser returns a token
+  /// via the itam:// deep link.
   Future<String?> loginWithMicrosoft() async {
     if (kIsWeb) {
       try {
@@ -167,7 +166,7 @@ class AppController extends ChangeNotifier {
       }
       return null;
     }
-    final outcome = await oauth.completeAzureLogin(_config.gotrueUrl);
+    final outcome = await oauth.completeAzureLogin(_config.apiBaseUrl);
     if (outcome.cancelled) return null;
     if (outcome.error != null) return outcome.error;
     final token = outcome.token;
