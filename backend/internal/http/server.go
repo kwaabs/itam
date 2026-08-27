@@ -444,6 +444,12 @@ func (s *Server) Router() http.Handler {
 	// Public SSO status (reads GoTrue settings; OAuth flows use GoTrue directly).
 	r.Get("/auth/sso/status", s.handleSSOStatus)
 
+	// Local (password) auth. Not yet used by any client - GoTrue still owns
+	// the live login flow until the frontend/mobile clients are repointed.
+	r.Post("/auth/login", s.handleLogin)
+	r.Post("/auth/refresh", s.handleRefresh)
+	r.Post("/auth/logout", s.handleLogout)
+
 	return r
 }
 

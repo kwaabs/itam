@@ -3,6 +3,10 @@ package auth
 import (
 	"bytes"
 	"context"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"log/slog"
@@ -18,6 +22,34 @@ import (
 	"github.com/google/uuid"
 	"github.com/uptrace/bun"
 )
+
+const (
+	accessTokenTTL  = time.Hour
+	refreshTokenTTL = 30 * 24 * time.Hour
+)
+
+var (
+	// ErrInvalidCredentials covers both "no such user" and "wrong password" -
+	// deliberately not distinguished, so a failed login can't be used to
+	// enumerate valid emails.
+	ErrInvalidCredentials  = errors.New("invalid credentials")
+	ErrInvalidRefreshToken = errors.New("invalid refresh token")
+)
+
+// TokenPair is the response shape for local login/refresh, matching the
+// access_token/refresh_token/user fields GoTrue's responses use today so
+// frontend/mobile clients need minimal changes when they switch over.
+type TokenPair struct {
+	AccessToken  string    `json:"access_token"`
+	RefreshToken string    `json:"refresh_token"`
+	ExpiresIn    int64     `json:"expires_in"`
+	User         *UserInfo `json:"user"`
+}
+
+type UserInfo struct {
+	ID    uuid.UUID `json:"id"`
+	Email string    `json:"email"`
+}
 
 type ctxKey string
 
@@ -231,6 +263,101 @@ func (s *Service) IssueAccessToken(userID uuid.UUID, email string, ttl time.Dura
 	}
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return t.SignedString([]byte(s.cfg.GoTrueJWTSecret))
+}
+
+// Login verifies email/password against iam.user_profiles and, on success,
+// issues a fresh access/refresh token pair.
+func (s *Service) Login(ctx context.Context, email, password string) (*TokenPair, error) {
+	var profile domain.UserProfile
+	err := s.db.NewSelect().Model(&profile).
+		Where("email = ?", email).
+		Where("is_active = true").
+		Scan(ctx)
+	if err != nil {
+		return nil, ErrInvalidCredentials
+	}
+	if profile.PasswordHash == "" || !VerifyPassword(profile.PasswordHash, password) {
+		return nil, ErrInvalidCredentials
+	}
+	return s.issuePair(ctx, profile.UserID, profile.Email)
+}
+
+// Refresh rotates a refresh token: the presented token is revoked and a new
+// pair is issued, so a stolen-but-already-used token stops working.
+func (s *Service) Refresh(ctx context.Context, refreshToken string) (*TokenPair, error) {
+	var rt domain.RefreshToken
+	err := s.db.NewSelect().Model(&rt).Where("token_hash = ?", hashToken(refreshToken)).Scan(ctx)
+	if err != nil {
+		return nil, ErrInvalidRefreshToken
+	}
+	if rt.RevokedAt != nil || time.Now().After(rt.ExpiresAt) {
+		return nil, ErrInvalidRefreshToken
+	}
+	if _, err := s.db.NewUpdate().Model((*domain.RefreshToken)(nil)).
+		Set("revoked_at = now()").Where("id = ?", rt.ID).Exec(ctx); err != nil {
+		return nil, err
+	}
+
+	var profile domain.UserProfile
+	if err := s.db.NewSelect().Model(&profile).
+		Where("user_id = ?", rt.UserID).
+		Where("is_active = true").
+		Scan(ctx); err != nil {
+		return nil, ErrInvalidRefreshToken
+	}
+	return s.issuePair(ctx, profile.UserID, profile.Email)
+}
+
+// Logout revokes a refresh token. Idempotent: revoking an already-revoked or
+// unknown token is not an error.
+func (s *Service) Logout(ctx context.Context, refreshToken string) error {
+	_, err := s.db.NewUpdate().Model((*domain.RefreshToken)(nil)).
+		Set("revoked_at = now()").
+		Where("token_hash = ?", hashToken(refreshToken)).
+		Where("revoked_at IS NULL").
+		Exec(ctx)
+	return err
+}
+
+func (s *Service) issuePair(ctx context.Context, userID uuid.UUID, email string) (*TokenPair, error) {
+	access, err := s.IssueAccessToken(userID, email, accessTokenTTL)
+	if err != nil {
+		return nil, err
+	}
+	refresh, err := generateOpaqueToken()
+	if err != nil {
+		return nil, err
+	}
+	rt := &domain.RefreshToken{
+		UserID:    userID,
+		TokenHash: hashToken(refresh),
+		ExpiresAt: time.Now().Add(refreshTokenTTL),
+	}
+	if _, err := s.db.NewInsert().Model(rt).Exec(ctx); err != nil {
+		return nil, err
+	}
+	return &TokenPair{
+		AccessToken:  access,
+		RefreshToken: refresh,
+		ExpiresIn:    int64(accessTokenTTL.Seconds()),
+		User:         &UserInfo{ID: userID, Email: email},
+	}, nil
+}
+
+// generateOpaqueToken returns a random URL-safe refresh token. Opaque (not a
+// JWT) and stored server-side hashed, mirroring GoTrue's own refresh tokens -
+// unlike access tokens, revocation has to be checkable without decoding.
+func generateOpaqueToken() (string, error) {
+	b := make([]byte, 32)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
+	}
+	return base64.RawURLEncoding.EncodeToString(b), nil
+}
+
+func hashToken(token string) string {
+	sum := sha256.Sum256([]byte(token))
+	return hex.EncodeToString(sum[:])
 }
 
 // serviceToken mints a short-lived service_role JWT GoTrue accepts on its admin
