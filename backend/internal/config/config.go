@@ -25,8 +25,8 @@ type Config struct {
 	S3AccessKey string
 	S3SecretKey string
 
-	// Bootstrap admin. The matching GoTrue user is granted the admin role and
-	// flagged superuser on first login (just-in-time provisioning).
+	// Bootstrap admin, created directly in iam.user_profiles on startup and
+	// granted the admin role (see auth.Service.BootstrapAdmin).
 	AdminEmail    string
 	AdminPassword string
 
