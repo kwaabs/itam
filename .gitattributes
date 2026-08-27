@@ -1,0 +1,4 @@
+# Shell scripts and SQL must use LF so they run inside Linux containers
+# (CRLF breaks shebangs / heredocs when mounted into the postgres image).
+*.sh text eol=lf
+*.sql text eol=lf

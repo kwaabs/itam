@@ -1,0 +1,11 @@
+{
+  "name": "ITAM Field",
+  "short_name": "ITAM Field",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f1117",
+  "theme_color": "#3b82f6",
+  "description": "Scan assets and do quick manual updates.",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
+}

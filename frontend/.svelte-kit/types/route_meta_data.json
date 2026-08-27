@@ -1,0 +1,99 @@
+{
+	"/": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/admin": [
+		"src/routes/+layout.ts"
+	],
+	"/assets": [
+		"src/routes/+layout.ts"
+	],
+	"/assets/new": [
+		"src/routes/+layout.ts"
+	],
+	"/assets/[id]": [
+		"src/routes/+layout.ts"
+	],
+	"/audit": [
+		"src/routes/+layout.ts"
+	],
+	"/capacity": [
+		"src/routes/+layout.ts"
+	],
+	"/costs": [
+		"src/routes/+layout.ts"
+	],
+	"/datacenter": [
+		"src/routes/+layout.ts"
+	],
+	"/datacenter/power": [
+		"src/routes/+layout.ts"
+	],
+	"/datacenter/[id]": [
+		"src/routes/+layout.ts"
+	],
+	"/iam": [
+		"src/routes/+layout.ts"
+	],
+	"/import": [
+		"src/routes/+layout.ts"
+	],
+	"/integrations": [
+		"src/routes/+layout.ts"
+	],
+	"/ipam": [
+		"src/routes/+layout.ts"
+	],
+	"/locations": [
+		"src/routes/+layout.ts"
+	],
+	"/login": [
+		"src/routes/+layout.ts"
+	],
+	"/netconfig": [
+		"src/routes/+layout.ts"
+	],
+	"/network": [
+		"src/routes/+layout.ts"
+	],
+	"/notifications": [
+		"src/routes/+layout.ts"
+	],
+	"/org-units": [
+		"src/routes/+layout.ts"
+	],
+	"/people": [
+		"src/routes/+layout.ts"
+	],
+	"/peripherals": [
+		"src/routes/+layout.ts"
+	],
+	"/procurement": [
+		"src/routes/+layout.ts"
+	],
+	"/procurement/[id]": [
+		"src/routes/+layout.ts"
+	],
+	"/reports": [
+		"src/routes/+layout.ts"
+	],
+	"/software": [
+		"src/routes/+layout.ts"
+	],
+	"/stock": [
+		"src/routes/+layout.ts"
+	],
+	"/storage": [
+		"src/routes/+layout.ts"
+	],
+	"/stores": [
+		"src/routes/+layout.ts"
+	],
+	"/vendors": [
+		"src/routes/+layout.ts"
+	],
+	"/virtualization": [
+		"src/routes/+layout.ts"
+	]
+}

@@ -1,0 +1,997 @@
+
+> itam-web@0.1.0 dev
+> vite dev --port 5608 --host
+
+
+  VITE v5.4.21  ready in 29047 ms
+
+  Ô×£  Local:   http://localhost:5608/
+  Ô×£  Network: http://172.18.144.1:5608/
+  Ô×£  Network: http://172.20.10.5:5608/
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:185:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:190:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:198:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:200:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:209:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:219:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:223:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:227:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:235:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:20 [vite-plugin-svelte] src/routes/locations/+page.svelte:239:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:160:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:162:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:168:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:173:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:174:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:177:4 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:201:46 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:243:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:244:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:245:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:246:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:21 [vite-plugin-svelte] src/routes/procurement/+page.svelte:248:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:22 [vite-plugin-svelte] src/routes/network/+page.svelte:37:5 `svgEl` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+02:55:22 [vite-plugin-svelte] src/routes/network/+page.svelte:48:5 `dragId` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:423:3 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:478:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:491:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:536:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:609:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:619:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:623:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:629:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:633:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:638:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:716:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:720:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:732:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:762:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:764:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:770:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:799:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:805:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:837:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:851:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:864:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:868:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:932:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+02:55:56 [vite-plugin-svelte] src/lib/components/DynamicForm.svelte:29:2 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:04:53 [vite] hmr update /src/routes/reports/+page.svelte
+03:05:03 [vite] hmr update /src/routes/reports/+page.svelte
+03:09:43 [vite] hmr update /src/routes/network/+page.svelte
+03:09:44 [vite-plugin-svelte] src/routes/network/+page.svelte:38:5 `svgEl` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:09:44 [vite-plugin-svelte] src/routes/network/+page.svelte:49:5 `dragId` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:09:53 [vite] hmr update /src/routes/network/+page.svelte
+03:09:53 [vite-plugin-svelte] src/routes/network/+page.svelte:38:5 `svgEl` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:09:53 [vite-plugin-svelte] src/routes/network/+page.svelte:49:5 `dragId` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:10:02 [vite] hmr update /src/routes/network/+page.svelte
+03:10:03 [vite-plugin-svelte] src/routes/network/+page.svelte:38:5 `svgEl` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:10:03 [vite-plugin-svelte] src/routes/network/+page.svelte:49:5 `dragId` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:10:15 [vite-plugin-svelte] src/routes/network/+page.svelte:38:5 `svgEl` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:10:15 [vite-plugin-svelte] src/routes/network/+page.svelte:49:5 `dragId` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:10:15 [vite] hmr update /src/routes/network/+page.svelte?svelte&type=style&lang.css
+03:10:54 [vite] hmr update /src/routes/assets/[id]/+page.svelte
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:426:3 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:481:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:494:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:539:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:612:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:622:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:626:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:632:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:636:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:641:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:719:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:723:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:735:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:765:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:767:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:773:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:802:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:808:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:840:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:854:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:867:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:871:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:10:54 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:935:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:14 [vite] hmr update /src/routes/assets/[id]/+page.svelte
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:426:3 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:481:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:494:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:539:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:612:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:622:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:626:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:632:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:636:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:641:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:743:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:747:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:759:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:789:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:791:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:797:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:826:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:832:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:864:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:878:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:891:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:895:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:15 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:959:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:426:3 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:481:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:494:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:539:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:612:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:622:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:626:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:632:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:636:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:641:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:743:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:747:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:759:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:789:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:791:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:797:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:826:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:832:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:864:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:878:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:891:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:895:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:959:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:11:25 [vite] hmr update /src/routes/assets/[id]/+page.svelte?svelte&type=style&lang.css
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/app.js
+03:13:38 [vite] page reload .svelte-kit/generated/server/internal.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:13:38 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:13:38 [vite] page reload .svelte-kit/generated/root.js
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:426:3 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:481:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:494:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:539:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:612:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:622:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:626:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:632:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:636:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:641:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:743:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:747:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:759:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:789:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:791:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:797:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:826:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:832:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:864:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:878:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:891:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:895:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:13:39 [vite-plugin-svelte] src/routes/assets/[id]/+page.svelte:959:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/app.js
+03:14:02 [vite] page reload .svelte-kit/generated/server/internal.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:14:02 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:14:02 [vite] page reload .svelte-kit/generated/root.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/app.js
+03:22:30 [vite] page reload .svelte-kit/generated/server/internal.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:22:30 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:22:30 [vite] page reload .svelte-kit/generated/root.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/app.js
+03:22:47 [vite] page reload .svelte-kit/generated/server/internal.js
+03:22:47 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:22:47 [vite] page reload .svelte-kit/generated/root.js
+03:25:49 [vite-plugin-svelte] src/routes/datacenter/+page.svelte:398:4 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:25:49 [vite-plugin-svelte] src/lib/components/RackFloorPlan.svelte:248:2 `<rect>` with a pointerdown handler must have an ARIA role
+https://svelte.dev/e/a11y_no_static_element_interactions
+03:26:02 [vite-plugin-svelte] src/routes/network/+page.svelte:38:5 `svgEl` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:26:02 [vite-plugin-svelte] src/routes/network/+page.svelte:49:5 `dragId` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+https://svelte.dev/e/non_reactive_update
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:129:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:130:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:131:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:132:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:133:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:135:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:142:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:55 [vite-plugin-svelte] src/routes/people/+page.svelte:151:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:56 [vite-plugin-svelte] src/routes/org-units/+page.svelte:105:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:56 [vite-plugin-svelte] src/routes/org-units/+page.svelte:110:5 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:26:56 [vite-plugin-svelte] src/routes/org-units/+page.svelte:118:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:264:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:265:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:266:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:267:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:268:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:269:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:272:48 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:313:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:314:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:315:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:319:52 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:321:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:323:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:324:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:367:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:368:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:369:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:370:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:18 [vite-plugin-svelte] src/routes/notifications/+page.svelte:376:51 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:407:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:409:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:416:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:418:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:470:26 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:472:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:474:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:481:7 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:487:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:488:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:555:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:557:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:564:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:565:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:594:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:595:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:596:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:599:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:600:23 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:636:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:637:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:638:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:639:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:688:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:694:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:696:6 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:709:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:710:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:711:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:712:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:27:19 [vite-plugin-svelte] src/routes/admin/+page.svelte:713:24 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:29:13 [vite] hmr update /src/routes/integrations/+page.svelte
+03:29:38 [vite] hmr update /src/routes/integrations/+page.svelte
+03:29:47 [vite] hmr update /src/routes/integrations/+page.svelte
+03:29:58 [vite] hmr update /src/routes/integrations/+page.svelte
+03:30:18 [vite] hmr update /src/routes/integrations/+page.svelte
+03:30:18 [vite-plugin-svelte] src/routes/integrations/+page.svelte:351:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:18 [vite-plugin-svelte] src/routes/integrations/+page.svelte:352:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:18 [vite-plugin-svelte] src/routes/integrations/+page.svelte:353:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:18 [vite-plugin-svelte] src/routes/integrations/+page.svelte:354:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:18 [vite-plugin-svelte] src/routes/integrations/+page.svelte:355:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:27 [vite] hmr update /src/routes/integrations/+page.svelte
+03:30:27 [vite-plugin-svelte] src/routes/integrations/+page.svelte:351:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:27 [vite-plugin-svelte] src/routes/integrations/+page.svelte:352:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:27 [vite-plugin-svelte] src/routes/integrations/+page.svelte:353:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:27 [vite-plugin-svelte] src/routes/integrations/+page.svelte:354:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:27 [vite-plugin-svelte] src/routes/integrations/+page.svelte:355:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:48 [vite] hmr update /src/routes/integrations/+page.svelte
+03:30:48 [vite-plugin-svelte] src/routes/integrations/+page.svelte:351:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:48 [vite-plugin-svelte] src/routes/integrations/+page.svelte:352:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:48 [vite-plugin-svelte] src/routes/integrations/+page.svelte:353:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:48 [vite-plugin-svelte] src/routes/integrations/+page.svelte:354:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:48 [vite-plugin-svelte] src/routes/integrations/+page.svelte:355:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:57 [vite-plugin-svelte] src/routes/integrations/+page.svelte:351:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:57 [vite-plugin-svelte] src/routes/integrations/+page.svelte:352:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:57 [vite-plugin-svelte] src/routes/integrations/+page.svelte:353:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:57 [vite-plugin-svelte] src/routes/integrations/+page.svelte:354:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:57 [vite-plugin-svelte] src/routes/integrations/+page.svelte:355:25 A form label must be associated with a control
+https://svelte.dev/e/a11y_label_has_associated_control
+03:30:57 [vite] hmr update /src/routes/integrations/+page.svelte?svelte&type=style&lang.css
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/8.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/10.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/19.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+03:33:02 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/app.js
+03:33:03 [vite] page reload .svelte-kit/generated/server/internal.js
+03:33:03 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:33:03 [vite] page reload .svelte-kit/generated/root.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/8.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/10.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/19.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/app.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:33:33 [vite] page reload .svelte-kit/generated/server/internal.js
+03:33:33 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:33:33 [vite] page reload .svelte-kit/generated/root.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/8.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/10.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/19.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/app.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:36:11 [vite] page reload .svelte-kit/generated/server/internal.js
+03:36:11 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:36:11 [vite] page reload .svelte-kit/generated/root.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/8.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/10.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/app.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/19.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:36:28 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:36:28 [vite] page reload .svelte-kit/generated/server/internal.js
+03:36:28 [vite] page reload .svelte-kit/generated/root.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/8.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/10.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/19.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/app.js
+03:37:37 [vite] page reload .svelte-kit/generated/server/internal.js
+03:37:37 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:37:37 [vite] page reload .svelte-kit/generated/root.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/8.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/10.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/16.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/19.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/20.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/app.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+03:37:58 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:37:58 [vite] page reload .svelte-kit/generated/server/internal.js
+03:37:58 [vite] page reload .svelte-kit/generated/root.js
+03:41:11 [vite] hmr update /src/routes/network/+page.svelte
+03:41:20 [vite] hmr update /src/routes/network/+page.svelte
+03:41:34 [vite] hmr update /src/lib/components/RackFloorPlan.svelte
+svelte config changed, restarting vite dev-server. changed file: C:\Users\user\projects\itam\frontend\svelte.config.js
+Forced re-optimization of dependencies
+03:41:59 [vite] server restarted.
+03:42:40 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:42:40 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:42:40 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:42:40 [vite] page reload .svelte-kit/generated/client/app.js
+03:42:40 [vite] page reload .svelte-kit/generated/server/internal.js
+03:42:40 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:42:40 [vite] page reload .svelte-kit/generated/root.js
+03:42:53 [vite] Ô£¿ new dependencies optimized: leaflet
+03:42:53 [vite] Ô£¿ optimized dependencies changed. reloading
+03:43:02 [vite] Ô£¿ new dependencies optimized: qrcode, jsbarcode
+03:43:02 [vite] Ô£¿ optimized dependencies changed. reloading
+03:43:09 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:43:09 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:43:09 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:43:09 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:43:09 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/app.js
+03:43:10 [vite] page reload .svelte-kit/generated/server/internal.js
+03:43:10 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:43:10 [vite] page reload .svelte-kit/generated/root.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/app.js
+03:46:49 [vite] page reload .svelte-kit/generated/server/internal.js
+03:46:49 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:46:49 [vite] page reload .svelte-kit/generated/root.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/app.js
+03:47:19 [vite] page reload .svelte-kit/generated/server/internal.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:47:19 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:47:19 [vite] page reload .svelte-kit/generated/root.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/app.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:48:54 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:48:54 [vite] page reload .svelte-kit/generated/server/internal.js
+03:48:54 [vite] page reload .svelte-kit/generated/root.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/app.js
+03:49:10 [vite] page reload .svelte-kit/generated/server/internal.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+03:49:10 [vite] page reload .svelte-kit/generated/client/matchers.js
+03:49:10 [vite] page reload .svelte-kit/generated/root.js
+03:57:47 [vite] hmr update /src/routes/procurement/+page.svelte
+03:57:53 [vite] hmr update /src/routes/procurement/+page.svelte
+03:57:58 [vite] hmr update /src/routes/procurement/+page.svelte
+03:58:06 [vite] hmr update /src/routes/procurement/+page.svelte
+03:58:27 [vite] hmr update /src/routes/procurement/+page.svelte
+03:59:03 [vite] hmr update /src/routes/procurement/+page.svelte
+03:59:29 [vite] hmr update /src/routes/+layout.svelte
+03:59:37 [vite] hmr update /src/routes/+layout.svelte
+03:59:58 [vite] hmr update /src/app.css
+04:03:11 [vite] hmr update /src/lib/components/SitesMap.svelte
+04:03:22 [vite] hmr update /src/lib/components/SitesMap.svelte
+04:03:29 [vite] hmr update /src/lib/components/AssetsMap.svelte
+04:03:38 [vite] hmr update /src/lib/components/AssetsMap.svelte
+04:04:37 [vite] hmr update /src/routes/admin/+page.svelte
+04:04:54 [vite] hmr update /src/routes/admin/+page.svelte
+04:05:08 [vite] hmr update /src/routes/admin/+page.svelte
+04:05:31 [vite] hmr update /src/routes/admin/+page.svelte
+04:11:17 [vite] hmr update /src/routes/network/+page.svelte
+04:11:50 [vite] hmr update /src/routes/network/+page.svelte
+04:12:02 [vite] hmr update /src/routes/network/+page.svelte
+04:12:17 [vite] hmr update /src/routes/network/+page.svelte
+04:12:32 [vite] hmr update /src/routes/network/+page.svelte
+04:12:40 [vite] hmr update /src/routes/network/+page.svelte
+svelte config changed, restarting vite dev-server. changed file: C:\Users\user\projects\itam\frontend\svelte.config.js
+11:43:25 [vite] hmr update /src/app.css
+11:43:25 [vite] hmr update /src/app.css
+11:43:27 [vite] server restarted.
+12:11:20 [vite] hmr update /src/routes/stores/+page.svelte
+12:11:30 [vite] hmr update /src/routes/stores/+page.svelte
+12:11:37 [vite] hmr update /src/routes/stores/+page.svelte
+12:11:50 [vite] hmr update /src/routes/stores/+page.svelte
+12:11:56 [vite] hmr update /src/routes/stores/+page.svelte
+12:12:03 [vite] hmr update /src/routes/stores/+page.svelte, /src/routes/stores/+page.svelte?svelte&type=style&lang.css
+12:12:03 [vite-plugin-svelte] src/routes/stores/+page.svelte:205:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:12:12 [vite] hmr update /src/routes/stores/+page.svelte
+12:12:12 [vite-plugin-svelte] src/routes/stores/+page.svelte:206:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:12:26 [vite-plugin-svelte] src/routes/stores/+page.svelte:206:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:12:26 [vite] hmr update /src/routes/stores/+page.svelte?svelte&type=style&lang.css
+12:15:24 [vite] hmr update /src/routes/stores/+page.svelte
+12:15:24 [vite-plugin-svelte] src/routes/stores/+page.svelte:208:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:15:32 [vite] hmr update /src/routes/stores/+page.svelte
+12:15:32 [vite-plugin-svelte] src/routes/stores/+page.svelte:210:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:15:38 [vite] hmr update /src/routes/stores/+page.svelte
+12:15:38 [vite-plugin-svelte] src/routes/stores/+page.svelte:210:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:15:47 [vite] hmr update /src/routes/stores/+page.svelte
+12:15:47 [vite-plugin-svelte] src/routes/stores/+page.svelte:216:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:15:52 [vite] hmr update /src/routes/stores/+page.svelte
+12:15:52 [vite-plugin-svelte] src/routes/stores/+page.svelte:217:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+12:16:04 [vite] hmr update /src/routes/stores/+page.svelte
+12:16:04 [vite-plugin-svelte] src/routes/stores/+page.svelte:226:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:06:10 [vite] hmr update /src/routes/stores/+page.svelte
+13:06:10 [vite] hmr update /src/routes/stores/+page.svelte
+13:06:10 [vite-plugin-svelte] src/routes/stores/+page.svelte:226:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:06:18 [vite] hmr update /src/routes/stores/+page.svelte
+13:06:18 [vite-plugin-svelte] src/routes/stores/+page.svelte:247:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:06:33 [vite] hmr update /src/routes/stores/+page.svelte
+13:06:33 [vite-plugin-svelte] src/routes/stores/+page.svelte:255:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:07:00 [vite] hmr update /src/routes/stores/+page.svelte
+13:07:00 [vite-plugin-svelte] src/routes/stores/+page.svelte:255:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:07:08 [vite] hmr update /src/routes/stores/+page.svelte
+13:07:08 [vite-plugin-svelte] src/routes/stores/+page.svelte:256:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:07:24 [vite] hmr update /src/routes/stores/+page.svelte
+13:07:24 [vite-plugin-svelte] src/routes/stores/+page.svelte:260:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:07:44 [vite] hmr update /src/routes/stores/+page.svelte
+13:07:44 [vite-plugin-svelte] src/routes/stores/+page.svelte:265:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:14:04 [vite] hmr update /src/routes/stores/+page.svelte
+13:14:04 [vite-plugin-svelte] src/routes/stores/+page.svelte:265:1 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/app.js
+13:15:02 [vite] page reload .svelte-kit/generated/server/internal.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+13:15:02 [vite] page reload .svelte-kit/generated/client/matchers.js
+13:15:02 [vite] page reload .svelte-kit/generated/root.js
+13:15:44 [vite] page reload .svelte-kit/generated/client/nodes/0.js
+13:15:44 [vite] page reload .svelte-kit/generated/client/nodes/1.js
+13:15:44 [vite] page reload .svelte-kit/generated/client/nodes/2.js
+13:15:44 [vite] page reload .svelte-kit/generated/client/nodes/3.js
+13:15:44 [vite] page reload .svelte-kit/generated/client/nodes/4.js
+13:15:44 [vite] page reload .svelte-kit/generated/client/nodes/6.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/9.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/14.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/15.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/17.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/18.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/21.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/app.js
+13:15:45 [vite] page reload .svelte-kit/generated/server/internal.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/22.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/23.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/24.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/26.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/27.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/28.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/30.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/nodes/31.js
+13:15:45 [vite] page reload .svelte-kit/generated/client/matchers.js
+13:15:45 [vite] page reload .svelte-kit/generated/root.js
+13:16:43 [vite] hmr update /src/routes/stores/+page.svelte?svelte&type=style&lang.css
+13:48:55 [vite] hmr update /src/routes/integrations/+page.svelte
+13:49:05 [vite] hmr update /src/routes/integrations/+page.svelte
+14:05:22 [vite] hmr update /src/routes/assets/+page.svelte
+14:05:22 [vite] hmr update /src/routes/assets/+page.svelte
+14:05:42 [vite] hmr update /src/routes/assets/+page.svelte
+14:06:02 [vite] hmr update /src/routes/assets/+page.svelte
+14:06:18 [vite] hmr update /src/routes/assets/+page.svelte
+14:06:39 [vite] hmr update /src/routes/assets/+page.svelte?svelte&type=style&lang.css
+14:14:19 [vite] hmr update /src/routes/integrations/+page.svelte
+14:39:03 [vite] hmr update /src/routes/login/+page.svelte, /src/routes/+layout.svelte
+14:39:17 [vite] hmr update /src/routes/login/+page.svelte, /src/routes/+layout.svelte
+14:39:36 [vite] hmr update /src/routes/login/+page.svelte
+14:39:43 [vite] hmr update /src/routes/login/+page.svelte
+14:40:08 [vite] hmr update /src/routes/admin/+page.svelte
+14:40:20 [vite] hmr update /src/routes/admin/+page.svelte
+14:40:42 [vite] hmr update /src/routes/admin/+page.svelte
+14:41:23 [vite] hmr update /src/routes/admin/+page.svelte
+15:31:22 [vite] hmr update /src/routes/integrations/+page.svelte
