@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { apiGet, apiPost, apiPut, apiDelete } from '$lib/api';
+	import { API_URL, GOTRUE_URL } from '$lib/config';
 	import { me, can } from '$lib/me';
 	import type {
 		AssetType,
@@ -29,7 +30,7 @@
 	async function loadSsoStatus() {
 		ssoLoading = true;
 		try {
-			const res = await fetch(`${import.meta.env.PUBLIC_API_URL ?? 'http://localhost:5607'}/auth/sso/status`);
+			const res = await fetch(`${API_URL}/auth/sso/status`);
 			if (res.ok) {
 				const data = await res.json();
 				ssoEnabled = data?.enabled === true;
@@ -872,7 +873,7 @@
 		</div>
 		<h4 style="margin:20px 0 8px">Setup (deploy environment)</h4>
 		<ol class="muted" style="margin:0; padding-left:20px; font-size:13px; line-height:1.6">
-			<li>Create an Entra app registration with redirect URI <code>http://localhost:5606/callback</code> (GoTrue, not the API).</li>
+			<li>Create an Entra app registration with redirect URI <code>{GOTRUE_URL}/callback</code> (GoTrue, not the API).</li>
 			<li>Set in <code>deploy/.env</code>: <code>AZURE_ENABLED=true</code>, <code>AZURE_CLIENT_ID</code>, <code>AZURE_CLIENT_SECRET</code>, <code>AZURE_URL</code>.</li>
 			<li>Add client origins to <code>GOTRUE_URI_ALLOW_LIST</code> (web, Flutter web, <code>itam://sso-callback</code> for Android).</li>
 			<li>Restart auth: <code>docker compose restart auth</code></li>
