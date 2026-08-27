@@ -1,9 +1,10 @@
+import { get } from 'svelte/store';
 import { API_URL, GOTRUE_URL } from './config';
 import { session } from './session';
 
-// Email/password login against GoTrue.
+// Email/password login against the API's local auth (see backend/internal/auth).
 export async function login(email: string, password: string): Promise<void> {
-	const res = await fetch(`${GOTRUE_URL}/token?grant_type=password`, {
+	const res = await fetch(`${API_URL}/auth/login`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ email, password })
@@ -38,6 +39,16 @@ export async function azureEnabled(): Promise<boolean> {
 }
 
 export function logout(): void {
+	const s = get(session);
+	if (s?.refresh_token) {
+		// Best-effort server-side revocation; don't block clearing the local
+		// session on it.
+		fetch(`${API_URL}/auth/logout`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ refresh_token: s.refresh_token })
+		}).catch(() => {});
+	}
 	session.set(null);
 }
 
