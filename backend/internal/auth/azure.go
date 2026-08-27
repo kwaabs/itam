@@ -80,7 +80,7 @@ func (s *Service) verifyAzureState(state string) (*azureState, error) {
 }
 
 func (s *Service) signAzureStatePayload(b64 string) string {
-	mac := hmac.New(sha256.New, []byte(s.cfg.GoTrueJWTSecret))
+	mac := hmac.New(sha256.New, []byte(s.cfg.JWTSecret))
 	mac.Write([]byte(b64))
 	return base64.RawURLEncoding.EncodeToString(mac.Sum(nil))
 }

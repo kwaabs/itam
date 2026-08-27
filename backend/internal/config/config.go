@@ -14,9 +14,8 @@ type Config struct {
 	RedisPass   string
 	NATSURL     string
 
-	// GoTrueJWTSecret signs/verifies our own locally-issued tokens (name kept
-	// for now - GoTrue itself is still running until it's fully retired).
-	GoTrueJWTSecret string
+	// JWTSecret signs and verifies our own locally-issued access tokens.
+	JWTSecret string
 
 	// Object storage (RustFS, S3-compatible) for attachments.
 	S3Endpoint  string
@@ -52,7 +51,7 @@ func Load() Config {
 		RedisPass:   env("REDIS_PASSWORD", ""),
 		NATSURL:     env("NATS_URL", "nats://localhost:5602"),
 
-		GoTrueJWTSecret: env("GOTRUE_JWT_SECRET", "super-secret-jwt-token-with-at-least-32-characters-long"),
+		JWTSecret: env("JWT_SECRET", "super-secret-jwt-token-with-at-least-32-characters-long"),
 
 		S3Endpoint:  env("S3_ENDPOINT", "http://localhost:5604"),
 		S3Region:    env("S3_REGION", "us-east-1"),

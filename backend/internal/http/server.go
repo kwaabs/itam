@@ -441,7 +441,7 @@ func (s *Server) Router() http.Handler {
 		r.With(s.require("settings.manage")).Put("/settings/{key}/secret", s.handleUpdateSecret)
 	})
 
-	// Public SSO status (reads GoTrue settings; OAuth flows use GoTrue directly).
+	// Public SSO status (reads the azure_enabled setting).
 	r.Get("/auth/sso/status", s.handleSSOStatus)
 
 	// Local (password) auth.

@@ -79,7 +79,7 @@ func main() {
 	rbacSvc := rbac.New(db, rdb)
 	authSvc := auth.New(cfg, db, log, settingsSvc)
 
-	// Best-effort admin bootstrap in GoTrue.
+	// Best-effort admin bootstrap.
 	go authSvc.BootstrapAdmin(context.Background())
 
 	srv := apihttp.NewServer(cfg, db, rdb, bus, metaSvc, rbacSvc, authSvc, settingsSvc, log)

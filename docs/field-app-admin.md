@@ -5,7 +5,7 @@ settings it depends on.
 
 ## 1. Network & CORS
 
-The field app (Flutter web) runs in the browser and calls the API/GoTrue
+The field app (Flutter web) runs in the browser and calls the API
 directly, so its origin must be allowed by CORS.
 
 - Default allowed origins (`backend/internal/config/config.go`):
@@ -13,12 +13,11 @@ directly, so its origin must be allowed by CORS.
 - Override with the `CORS_ORIGINS` env var (comma-separated) when serving the
   field app from another host/port (e.g. a phone hitting your LAN IP).
 
-Service URLs the app asks for on first launch:
+Service URL the app asks for on first launch:
 
 | Setting | Local default | Android emulator |
 |---------|---------------|------------------|
 | API base URL | `http://localhost:5607` | `http://10.0.2.2:5607` |
-| GoTrue (auth) URL | `http://localhost:5606` | `http://10.0.2.2:5606` |
 
 ## 2. Permissions field users need
 

@@ -3,7 +3,7 @@
   Create + test a ManageEngine OpManager pull connector against a running ITAM stack.
 
 .DESCRIPTION
-  Logs into GoTrue as the bootstrap admin, then:
+  Logs into the ITAM API as the bootstrap admin, then:
     1. (re)creates a pull connector  (direction=pull, API-key auth)
     2. creates the field mapping       (OpManager JSON -> asset)
     3. calls /test                     (fetch probe)
@@ -24,7 +24,6 @@ param(
     [string] $BaseUrl,
 
     [string] $ApiUrl    = 'http://localhost:5607',
-    [string] $GoTrueUrl = 'http://localhost:5606',
     [string] $AdminEmail    = 'admin@itam.local',
     [string] $AdminPassword = 'admin12345',
 
@@ -93,7 +92,7 @@ $config = @{
 
 function Get-AdminToken {
     $body = @{ email = $AdminEmail; password = $AdminPassword } | ConvertTo-Json
-    $r = Invoke-RestMethod -Method POST -Uri "$GoTrueUrl/token?grant_type=password" `
+    $r = Invoke-RestMethod -Method POST -Uri "$ApiUrl/auth/login" `
         -ContentType 'application/json' -Body $body
     return $r.access_token
 }

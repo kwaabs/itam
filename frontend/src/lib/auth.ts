@@ -26,7 +26,7 @@ export function azureLogin(): void {
 	window.location.href = `${API_URL}/auth/azure/start?redirect_to=${returnTo}`;
 }
 
-// Whether GoTrue has Azure AD enabled (proxied via API to avoid browser CORS).
+// Whether Azure AD SSO is configured and enabled.
 export async function azureEnabled(): Promise<boolean> {
 	try {
 		const res = await fetch(`${API_URL}/auth/sso/status`);
@@ -52,7 +52,7 @@ export function logout(): void {
 	session.set(null);
 }
 
-// GoTrue returns tokens in the URL hash after an OAuth redirect.
+// The API returns tokens in the URL hash after an Azure OAuth redirect.
 export function captureOAuthRedirect(): boolean {
 	if (typeof window === 'undefined' || !window.location.hash) return false;
 	const params = new URLSearchParams(window.location.hash.slice(1));

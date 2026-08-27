@@ -1,89 +1,78 @@
 # Microsoft Entra ID (Azure AD) SSO
 
-All authentication in ITAM goes through **GoTrue** — email/password and Microsoft SSO.
-The ITAM API only **validates** GoTrue JWTs; it does not run its own OAuth flow.
+The ITAM API implements the OIDC authorization-code flow itself (see
+`backend/internal/auth/azure.go`) - there is no separate auth proxy. It
+exchanges the code, verifies the `id_token`'s signature against Microsoft's
+published keys (cached per tenant), and issues its own access/refresh tokens.
 
 ## Architecture
 
 ```
 Browser / mobile app
-  │── password ──▶ GoTrue /token
-  │── Microsoft ─▶ GoTrue /authorize?provider=azure
-  │                      │
-  │                      ▼
-  │                 Microsoft login
-  │                      │
-  │                      ▼
-  │                 GoTrue /callback  (registered in Entra)
-  │                      │
-  └◀── redirect with #access_token ──┘
-         │
-         ▼
-    ITAM API (validates JWT, JIT user profile)
+  │── password ────▶ API POST /auth/login
+  │── Microsoft ───▶ API GET /auth/azure/start
+  │                       │
+  │                       ▼
+  │                  Microsoft login
+  │                       │
+  │                       ▼
+  │                  API GET /auth/azure/callback  (registered in Entra)
+  │                       │
+  └◀── redirect with #access_token ───┘
 ```
 
 ## Entra app registration
 
 1. Open [portal.azure.com](https://portal.azure.com) → **Azure Active Directory** → **App registrations** → **New registration**.
-2. Add a **Web** redirect URI pointing at **GoTrue** (not the ITAM API):
+2. Add a **Web** redirect URI pointing at the ITAM API:
 
    ```
-   http://localhost:5606/callback
+   http://localhost:5607/auth/azure/callback
    ```
 
-   Production: `https://<auth-host>/callback`
+   Production: `https://<api-host>/auth/azure/callback`
+
+   This exact value is also shown on **Admin → SSO** in the app.
 
 3. Under **Certificates & secrets**, create a client secret.
 4. Under **Token configuration**, ensure `email`, `openid`, `profile` are available (defaults are usually fine).
 
-## Enable in deploy
+## Enable in the app
 
-Edit `deploy/.env`:
+Go to **Admin → SSO** and fill in:
 
-```env
-AZURE_ENABLED=true
-AZURE_CLIENT_ID=<application-client-id>
-AZURE_CLIENT_SECRET=<secret-value>
-AZURE_URL=https://login.microsoftonline.com/<tenant-id>/v2.0
-AZURE_REDIRECT_URI=http://localhost:5606/callback
+- **Tenant ID** - your Entra directory (tenant) ID
+- **Client ID** - the app registration's Application (client) ID
+- **Client secret** - the value created above
+- **Enable Microsoft sign-in**
 
-# Origins GoTrue may redirect to after OAuth (hash contains tokens)
-GOTRUE_URI_ALLOW_LIST=http://localhost:5608,http://localhost:5609,itam://sso-callback
-```
-
-Restart the auth container:
-
-```bash
-docker compose restart auth
-```
+Save. No `deploy/.env` changes or container restarts needed - these are
+stored in the database (`meta.settings`), with the client secret encrypted
+at rest via Vault, and take effect on the next login attempt.
 
 ## Clients
 
 | Client | Microsoft login URL | Return URL |
 |---|---|---|
-| Web app (`:5608`) | GoTrue `/authorize?provider=azure&redirect_to=<origin>` | Same origin |
-| Flutter web (`:5609`) | Same | `http://localhost:5609` |
-| Android native | Same via system browser | `itam://sso-callback` |
+| Web app | API `/auth/azure/start?redirect_to=<origin>` | Same origin |
+| Flutter web | Same | Its own origin |
+| Android native | Same, via system browser | `itam://sso-callback` |
 
-The **Sign in with Microsoft** button appears when GoTrue reports Azure enabled (`GET /auth/sso/status` on the API proxies GoTrue `/settings`).
-
-## Admin UI
-
-**Admin → Metadata → SSO** shows read-only status and setup steps. Azure credentials live in `deploy/.env`, not in the metadata database.
+The **Sign in with Microsoft** button appears when `GET /auth/sso/status`
+reports the `azure_enabled` setting is on.
 
 ## Troubleshooting
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| No Microsoft button | `AZURE_ENABLED=false` or incomplete env | Check `deploy/.env`, restart `auth` |
-| Redirect URI mismatch | Entra URI is not GoTrue `/callback` | Use `http://localhost:5606/callback` in dev |
-| Sign-in works but no ITAM access | User not provisioned / no role | Assign roles in **IAM**; admin email gets superuser on first login |
-| Android does not return to app | Deep link missing | Rebuild app; verify `itam://sso-callback` in `GOTRUE_URI_ALLOW_LIST` |
+| No Microsoft button | Azure SSO not enabled or incomplete config | Check **Admin → SSO** |
+| Redirect URI mismatch | Entra URI isn't the API's `/auth/azure/callback` | Match it exactly, including scheme/host |
+| Sign-in works but no ITAM access | User not provisioned / no role | Assign roles in **IAM**; the account matching `ADMIN_EMAIL` gets superuser on first login |
+| Android does not return to app | Deep link not registered on the OS side | Rebuild app; verify the `itam://sso-callback` scheme is set up in the Android manifest |
 
 ## Secret rotation
 
 1. Create a new secret in Entra → **Certificates & secrets**.
-2. Update `AZURE_CLIENT_SECRET` in `deploy/.env`.
-3. `docker compose restart auth`.
+2. Paste it into **Admin → SSO → Client secret** and save.
 
-Existing sessions remain valid until their JWT expires.
+Existing sessions remain valid until their access token expires.

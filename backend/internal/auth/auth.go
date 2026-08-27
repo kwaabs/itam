@@ -34,9 +34,7 @@ var (
 	ErrInvalidRefreshToken = errors.New("invalid refresh token")
 )
 
-// TokenPair is the response shape for local login/refresh, matching the
-// access_token/refresh_token/user fields GoTrue's responses use today so
-// frontend/mobile clients need minimal changes when they switch over.
+// TokenPair is the response shape for local login/refresh/Azure SSO.
 type TokenPair struct {
 	AccessToken  string    `json:"access_token"`
 	RefreshToken string    `json:"refresh_token"`
@@ -53,7 +51,7 @@ type ctxKey string
 
 const principalKey ctxKey = "principal"
 
-// Principal is the authenticated caller derived from a GoTrue JWT.
+// Principal is the authenticated caller derived from the access token.
 type Principal struct {
 	UserID      uuid.UUID `json:"user_id"`
 	Email       string    `json:"email"`
@@ -68,7 +66,7 @@ type SettingsReader interface {
 	GetOr(ctx context.Context, key, fallback string) string
 }
 
-// Service validates GoTrue tokens and provisions app profiles just-in-time.
+// Service validates access tokens and provisions app profiles just-in-time.
 type Service struct {
 	cfg         config.Config
 	db          *bun.DB
@@ -118,7 +116,7 @@ func (s *Service) parse(raw string) (jwt.MapClaims, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("unexpected signing method")
 		}
-		return []byte(s.cfg.GoTrueJWTSecret), nil
+		return []byte(s.cfg.JWTSecret), nil
 	})
 	if err != nil {
 		return nil, err
@@ -252,11 +250,8 @@ func (s *Service) BootstrapAdmin(ctx context.Context) {
 	}
 }
 
-// IssueAccessToken mints an app-issued JWT for a local (password) login,
-// signed with the same shared secret GoTrue tokens use today so it validates
-// through the exact same Middleware/parse() path without any changes there.
-// Shaped like GoTrue's claims (sub, email, role) so downstream code that
-// reads the JWT doesn't need to know who issued it.
+// IssueAccessToken mints an access token for a local (password) or Azure SSO
+// login, signed with the shared JWT secret and verified by Middleware/parse().
 func (s *Service) IssueAccessToken(userID uuid.UUID, email string, ttl time.Duration) (string, error) {
 	claims := jwt.MapClaims{
 		"sub":   userID.String(),
@@ -266,7 +261,7 @@ func (s *Service) IssueAccessToken(userID uuid.UUID, email string, ttl time.Dura
 		"exp":   time.Now().Add(ttl).Unix(),
 	}
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return t.SignedString([]byte(s.cfg.GoTrueJWTSecret))
+	return t.SignedString([]byte(s.cfg.JWTSecret))
 }
 
 // Login verifies email/password against iam.user_profiles and, on success,

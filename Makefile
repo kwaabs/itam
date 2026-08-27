@@ -15,9 +15,8 @@ GOOSE_IMAGE    ?= itam-migrate
 GOOSE_NETWORK  ?= itam_default
 GOOSE_CMD      := powershell -NoProfile -ExecutionPolicy Bypass -File scripts/goose-docker.ps1
 
-# Backing services only (all pulled images, never built). GoTrue auto-migrates
-# its own auth schema, so it belongs here too.
-INFRA_SERVICES := db valkey nats rustfs auth
+# Backing services only (all pulled images, never built).
+INFRA_SERVICES := db valkey nats rustfs
 INFRA_VOLUMES  := itam_db_data itam_valkey_data itam_nats_data itam_rustfs_data
 PSQL           := $(COMPOSE) exec db psql -U supabase_admin -d postgres
 
@@ -49,7 +48,7 @@ ps: ## Show running services
 ## ---- Infra only: backing services, NO image builds (for local dev) ----
 ## After `make infra-up`, run `make migrate-up` to create the app schema.
 .PHONY: infra-up
-infra-up: ## Start infra only (db, valkey, nats, rustfs, auth) - no builds
+infra-up: ## Start infra only (db, valkey, nats, rustfs) - no builds
 	$(COMPOSE) up -d --no-build $(INFRA_SERVICES)
 
 .PHONY: infra-down
