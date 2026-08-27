@@ -123,7 +123,7 @@ class AppController extends ChangeNotifier {
   Future<String?> login(String email, String password) async {
     final auth = Dio(BaseOptions(validateStatus: (s) => s != null && s < 500));
     try {
-      final url = '${_config.gotrueUrl.replaceAll(RegExp(r'/+$'), '')}/token?grant_type=password';
+      final url = '${_config.apiBaseUrl.replaceAll(RegExp(r'/+$'), '')}/auth/login';
       final resp = await auth.post(
         url,
         data: {'email': email, 'password': password},
@@ -186,7 +186,7 @@ class AppController extends ChangeNotifier {
     _refreshing = true;
     final auth = Dio(BaseOptions(validateStatus: (s) => s != null && s < 500));
     try {
-      final url = '${_config.gotrueUrl.replaceAll(RegExp(r'/+$'), '')}/token?grant_type=refresh_token';
+      final url = '${_config.apiBaseUrl.replaceAll(RegExp(r'/+$'), '')}/auth/refresh';
       final resp = await auth.post(url, data: {'refresh_token': _refreshToken});
       if (resp.statusCode == 200 && resp.data is Map) {
         final data = resp.data as Map;
@@ -220,6 +220,16 @@ class AppController extends ChangeNotifier {
   void backToSetup() => _set(AppStatus.needsSetup);
 
   Future<void> logout() async {
+    if (_refreshToken != null) {
+      // Best-effort server-side revocation; don't block clearing local state.
+      final token = _refreshToken;
+      final base = _config.apiBaseUrl.replaceAll(RegExp(r'/+$'), '');
+      unawaited(Future(() async {
+        try {
+          await Dio().post('$base/auth/logout', data: {'refresh_token': token});
+        } catch (_) {/* best-effort */}
+      }));
+    }
     _accessToken = null;
     _refreshToken = null;
     _me = null;
