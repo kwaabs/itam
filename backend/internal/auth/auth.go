@@ -216,6 +216,23 @@ func (s *Service) BootstrapAdmin(ctx context.Context) {
 	}
 }
 
+// IssueAccessToken mints an app-issued JWT for a local (password) login,
+// signed with the same shared secret GoTrue tokens use today so it validates
+// through the exact same Middleware/parse() path without any changes there.
+// Shaped like GoTrue's claims (sub, email, role) so downstream code that
+// reads the JWT doesn't need to know who issued it.
+func (s *Service) IssueAccessToken(userID uuid.UUID, email string, ttl time.Duration) (string, error) {
+	claims := jwt.MapClaims{
+		"sub":   userID.String(),
+		"email": email,
+		"role":  "authenticated",
+		"iat":   time.Now().Unix(),
+		"exp":   time.Now().Add(ttl).Unix(),
+	}
+	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return t.SignedString([]byte(s.cfg.GoTrueJWTSecret))
+}
+
 // serviceToken mints a short-lived service_role JWT GoTrue accepts on its admin
 // API (it is signed with the shared secret).
 func (s *Service) serviceToken() (string, error) {
