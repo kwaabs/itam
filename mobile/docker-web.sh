@@ -3,7 +3,7 @@
 # Run from the mobile/ directory:  ./docker-web.sh
 # Then open http://localhost:5609 in your browser.
 #
-# The app runs in YOUR browser, so it calls the ITAM API/GoTrue on localhost
+# The app runs in YOUR browser, so it calls the ITAM API on localhost
 # directly. Make sure the API allows http://localhost:5609 (default) and has
 # been restarted since that CORS change.
 set -e

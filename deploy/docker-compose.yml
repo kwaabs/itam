@@ -15,7 +15,6 @@ services:
       POSTGRES_HOST: /var/run/postgresql
       # Consumed by the initdb role script (see deploy/initdb).
       ITAM_DB_PASSWORD: ${ITAM_DB_PASSWORD:-itam_app_dev_pw}
-      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD:-auth_admin_dev_pw}
     ports:
       - "${POSTGRES_PORT:-5600}:5432"
     volumes:
@@ -84,40 +83,6 @@ services:
       up
     restart: "no"
 
-  # GoTrue: authentication (email/password now, OIDC/Azure-ready).
-  # GoTrue auto-migrates its own `auth` schema, so it only needs the database
-  # and is part of the build-free infra stack (see `make infra-up`).
-  auth:
-    image: ${GOTRUE_IMAGE:-supabase/gotrue:v2.158.1}
-    container_name: itam-auth
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      GOTRUE_API_HOST: 0.0.0.0
-      PORT: "9999"
-      GOTRUE_DB_DRIVER: postgres
-      GOTRUE_DB_DATABASE_URL: "postgres://supabase_auth_admin:${AUTH_DB_PASSWORD:-auth_admin_dev_pw}@db:5432/${POSTGRES_DB:-postgres}?sslmode=disable&search_path=auth"
-      GOTRUE_SITE_URL: ${SITE_URL:-http://localhost:5608}
-      GOTRUE_URI_ALLOW_LIST: ${GOTRUE_URI_ALLOW_LIST:-http://localhost:5608,http://localhost:5609,itam://sso-callback}
-      GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters-long}
-      GOTRUE_JWT_EXP: "3600"
-      GOTRUE_JWT_AUD: authenticated
-      GOTRUE_JWT_ADMIN_ROLES: "service_role,supabase_admin"
-      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
-      GOTRUE_DISABLE_SIGNUP: ${GOTRUE_DISABLE_SIGNUP:-false}
-      GOTRUE_MAILER_AUTOCONFIRM: "true"
-      GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
-      API_EXTERNAL_URL: ${GOTRUE_EXTERNAL_URL:-http://localhost:5606}
-      # Azure AD (OIDC) - fill in and flip enabled to true to turn on SSO.
-      GOTRUE_EXTERNAL_AZURE_ENABLED: ${AZURE_ENABLED:-false}
-      GOTRUE_EXTERNAL_AZURE_CLIENT_ID: ${AZURE_CLIENT_ID:-}
-      GOTRUE_EXTERNAL_AZURE_SECRET: ${AZURE_CLIENT_SECRET:-}
-      GOTRUE_EXTERNAL_AZURE_URL: ${AZURE_URL:-}
-      GOTRUE_EXTERNAL_AZURE_REDIRECT_URI: ${AZURE_REDIRECT_URI:-http://localhost:5606/callback}
-    ports:
-      - "${GOTRUE_PORT:-5606}:9999"
-
   api:
     build:
       context: ../backend
@@ -137,8 +102,7 @@ services:
       DATABASE_URL: "postgres://itam_app:${ITAM_DB_PASSWORD:-itam_app_dev_pw}@db:5432/${POSTGRES_DB:-postgres}?sslmode=disable"
       REDIS_ADDR: "valkey:6379"
       NATS_URL: "nats://nats:4222"
-      GOTRUE_URL: "http://auth:9999"
-      GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters-long}
+      JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters-long}
       S3_ENDPOINT: "http://rustfs:9000"
       S3_BUCKET: ${S3_BUCKET:-itam}
       S3_ACCESS_KEY: ${S3_ACCESS_KEY:-rustfsadmin}
@@ -147,7 +111,6 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin12345}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5608,http://localhost:5609}
       DEBUG: ${DEBUG:-true}
-      AZURE_ENABLED: ${AZURE_ENABLED:-false}
     ports:
       - "${API_PORT:-5607}:8080"
 
@@ -159,9 +122,8 @@ services:
     depends_on:
       - api
     environment:
-      # Public URLs the browser uses.
+      # Public URL the browser uses.
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:5607}
-      PUBLIC_GOTRUE_URL: ${PUBLIC_GOTRUE_URL:-http://localhost:5606}
     ports:
       - "${WEB_PORT:-5608}:3000"
 

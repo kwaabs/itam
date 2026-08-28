@@ -3,7 +3,7 @@
   Create + test Microsoft Graph (app-only) pull connectors against a running ITAM stack.
 
 .DESCRIPTION
-  Logs into GoTrue as the bootstrap admin, then for each selected Graph source it:
+  Logs into the ITAM API as the bootstrap admin, then for each selected Graph source it:
     1. (re)creates a pull connector  (direction=pull, OAuth client-credentials)
     2. creates the field mapping       (Graph JSON -> asset/person)
     3. calls /test                     (auth + 1-record probe; confirms scopes)
@@ -33,7 +33,6 @@ param(
     [string] $Scope     = 'https://graph.microsoft.com/.default',
 
     [string] $ApiUrl    = 'http://localhost:5607',
-    [string] $GoTrueUrl = 'http://localhost:5606',
     [string] $AdminEmail    = 'admin@itam.local',
     [string] $AdminPassword = 'admin12345',
 
@@ -176,8 +175,8 @@ function Invoke-Api {
 function Write-Head($t) { Write-Host "`n=== $t ===" -ForegroundColor Cyan }
 
 # --- 1. authenticate --------------------------------------------------------
-Write-Head "Logging in to GoTrue ($AdminEmail)"
-$login = Invoke-RestMethod -Method Post -Uri "$GoTrueUrl/token?grant_type=password" `
+Write-Head "Logging in to the ITAM API ($AdminEmail)"
+$login = Invoke-RestMethod -Method Post -Uri "$ApiUrl/auth/login" `
     -ContentType 'application/json' `
     -Body (@{ email = $AdminEmail; password = $AdminPassword } | ConvertTo-Json)
 $script:token = $login.access_token

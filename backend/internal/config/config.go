@@ -14,11 +14,8 @@ type Config struct {
 	RedisPass   string
 	NATSURL     string
 
-	// GoTrue owns authentication. We validate its JWTs and (optionally) call
-	// its admin API to bootstrap the first admin user.
-	GoTrueURL       string
-	GoTrueJWTSecret string
-	AzureEnabled    bool
+	// JWTSecret signs and verifies our own locally-issued access tokens.
+	JWTSecret string
 
 	// Object storage (RustFS, S3-compatible) for attachments.
 	S3Endpoint  string
@@ -27,8 +24,8 @@ type Config struct {
 	S3AccessKey string
 	S3SecretKey string
 
-	// Bootstrap admin. The matching GoTrue user is granted the admin role and
-	// flagged superuser on first login (just-in-time provisioning).
+	// Bootstrap admin, created directly in iam.user_profiles on startup and
+	// granted the admin role (see auth.Service.BootstrapAdmin).
 	AdminEmail    string
 	AdminPassword string
 
@@ -54,9 +51,7 @@ func Load() Config {
 		RedisPass:   env("REDIS_PASSWORD", ""),
 		NATSURL:     env("NATS_URL", "nats://localhost:5602"),
 
-		GoTrueURL:       env("GOTRUE_URL", "http://localhost:5606"),
-		GoTrueJWTSecret: env("GOTRUE_JWT_SECRET", "super-secret-jwt-token-with-at-least-32-characters-long"),
-		AzureEnabled:    strings.EqualFold(env("AZURE_ENABLED", "false"), "true"),
+		JWTSecret: env("JWT_SECRET", "super-secret-jwt-token-with-at-least-32-characters-long"),
 
 		S3Endpoint:  env("S3_ENDPOINT", "http://localhost:5604"),
 		S3Region:    env("S3_REGION", "us-east-1"),

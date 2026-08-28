@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../core/app_state.dart';
 import '../core/config.dart';
 
-/// First-run connection setup: where the API and GoTrue live.
+/// First-run connection setup: where the API lives.
 class SetupScreen extends StatefulWidget {
   const SetupScreen({super.key});
 
@@ -14,7 +14,6 @@ class SetupScreen extends StatefulWidget {
 
 class _SetupScreenState extends State<SetupScreen> {
   late final TextEditingController _api;
-  late final TextEditingController _gotrue;
   bool _saving = false;
 
   @override
@@ -22,21 +21,17 @@ class _SetupScreenState extends State<SetupScreen> {
     super.initState();
     final cfg = context.read<AppController>().config;
     _api = TextEditingController(text: cfg.apiBaseUrl);
-    _gotrue = TextEditingController(text: cfg.gotrueUrl);
   }
 
   @override
   void dispose() {
     _api.dispose();
-    _gotrue.dispose();
     super.dispose();
   }
 
   Future<void> _save() async {
     setState(() => _saving = true);
-    await context.read<AppController>().saveConfig(
-          AppConfig(apiBaseUrl: _api.text.trim(), gotrueUrl: _gotrue.text.trim()),
-        );
+    await context.read<AppController>().saveConfig(AppConfig(apiBaseUrl: _api.text.trim()));
     if (mounted) setState(() => _saving = false);
   }
 
@@ -54,20 +49,14 @@ class _SetupScreenState extends State<SetupScreen> {
               const Text('Server connection', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 6),
               const Text(
-                'Enter the ITAM API and auth (GoTrue) addresses. On an Android emulator '
-                'use 10.0.2.2; on a phone use the host PC\'s LAN IP.',
+                'Enter the ITAM API address. On an Android emulator use 10.0.2.2; '
+                'on a phone use the host PC\'s LAN IP.',
                 style: TextStyle(color: Colors.white60),
               ),
               const SizedBox(height: 20),
               TextField(
                 controller: _api,
                 decoration: const InputDecoration(labelText: 'API base URL', hintText: 'http://localhost:5607'),
-                keyboardType: TextInputType.url,
-              ),
-              const SizedBox(height: 14),
-              TextField(
-                controller: _gotrue,
-                decoration: const InputDecoration(labelText: 'GoTrue (auth) URL', hintText: 'http://localhost:5606'),
                 keyboardType: TextInputType.url,
               ),
               const SizedBox(height: 22),

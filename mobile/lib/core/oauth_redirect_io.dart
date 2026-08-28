@@ -19,14 +19,13 @@ Future<bool> azureLoginEnabled(String apiBaseUrl) async {
   }
 }
 
-void startAzureLogin(String gotrueUrl, String returnTo) {
+void startAzureLogin(String apiBaseUrl, String returnTo) {
   throw UnsupportedError('Use completeAzureLogin() on native platforms');
 }
 
-Future<AzureLoginOutcome> completeAzureLogin(String gotrueUrl) async {
-  final base = gotrueUrl.replaceAll(RegExp(r'/+$'), '');
-  final loginUrl = Uri.parse('$base/authorize').replace(queryParameters: {
-    'provider': 'azure',
+Future<AzureLoginOutcome> completeAzureLogin(String apiBaseUrl) async {
+  final base = apiBaseUrl.replaceAll(RegExp(r'/+$'), '');
+  final loginUrl = Uri.parse('$base/auth/azure/start').replace(queryParameters: {
     'redirect_to': azureNativeCallbackUrl,
   }).toString();
   try {

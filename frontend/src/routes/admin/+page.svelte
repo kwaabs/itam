@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { apiGet, apiPost, apiPut, apiDelete } from '$lib/api';
-	import { API_URL, GOTRUE_URL } from '$lib/config';
+	import { API_URL } from '$lib/config';
 	import { me, can } from '$lib/me';
 	import type {
 		AssetType,
@@ -23,7 +23,7 @@
 	const manage = $derived(can($me, 'metadata.manage'));
 	const manageSettings = $derived(can($me, 'settings.manage'));
 
-	// ---- GoTrue SSO status (read-only; Azure is configured in deploy env) ----
+	// ---- Azure AD SSO status + config (native OIDC; see backend/internal/auth/azure.go) ----
 	let ssoEnabled = $state(false);
 	let ssoLoading = $state(true);
 
@@ -39,6 +39,43 @@
 			ssoEnabled = false;
 		} finally {
 			ssoLoading = false;
+		}
+	}
+
+	const azureRedirectUrl = `${API_URL}/auth/azure/callback`;
+	let azureTenant = $state('');
+	let azureClientId = $state('');
+	let azureClientSecret = $state(''); // write-only; never returned by the settings API
+	let azureConfigEnabled = $state(false);
+	let azureSaved = $state('');
+
+	async function loadAzureSettings() {
+		try {
+			const rows = await apiGet<{ key: string; value: unknown }[]>('/api/settings');
+			azureTenant = String(rows?.find((r) => r.key === 'azure_tenant')?.value ?? '');
+			azureClientId = String(rows?.find((r) => r.key === 'azure_client_id')?.value ?? '');
+			azureConfigEnabled = rows?.find((r) => r.key === 'azure_enabled')?.value === true;
+		} catch {
+			/* settings may be unreadable; keep defaults */
+		}
+	}
+
+	async function saveAzureSettings() {
+		azureSaved = '';
+		try {
+			await apiPut('/api/settings/azure_tenant', { value: azureTenant.trim() });
+			await apiPut('/api/settings/azure_client_id', { value: azureClientId.trim() });
+			await apiPut('/api/settings/azure_redirect_url', { value: azureRedirectUrl });
+			if (azureClientSecret.trim()) {
+				await apiPut('/api/settings/azure_client_secret/secret', { value: azureClientSecret.trim() });
+				azureClientSecret = '';
+			}
+			await apiPut('/api/settings/azure_enabled', { value: azureConfigEnabled });
+			azureSaved = 'Saved.';
+			setTimeout(() => (azureSaved = ''), 4000);
+			await loadSsoStatus();
+		} catch (e) {
+			error = e instanceof Error ? e.message : 'Failed to save Azure SSO settings';
 		}
 	}
 
@@ -231,7 +268,7 @@
 
 	onMount(async () => {
 		try {
-			await Promise.all([loadCommon(), loadSsoStatus()]);
+			await Promise.all([loadCommon(), loadSsoStatus(), loadAzureSettings()]);
 		} catch (e) {
 			error = e instanceof Error ? e.message : 'Failed to load';
 		}
@@ -855,8 +892,8 @@
 		<div>
 			<h3 style="margin:0">Microsoft Entra ID (Azure AD) Single Sign-On</h3>
 			<p class="muted" style="margin:4px 0 0">
-				All authentication — email/password and Microsoft — goes through <strong>GoTrue</strong>.
-				Configure Azure in <code>deploy/.env</code> and restart the <code>auth</code> container.
+				Native OIDC sign-in, configured here and stored in the database (the client secret is
+				encrypted at rest). No deploy/.env changes or restarts needed.
 			</p>
 		</div>
 	</div>
@@ -864,20 +901,48 @@
 		<div class="field">
 			<label>Status</label>
 			{#if ssoLoading}
-				<p class="muted" style="margin:0">Checking GoTrue…</p>
+				<p class="muted" style="margin:0">Checking…</p>
 			{:else if ssoEnabled}
 				<p style="margin:0"><span class="badge success">Microsoft sign-in enabled</span></p>
 			{:else}
 				<p style="margin:0"><span class="badge warning">Not configured</span></p>
 			{/if}
 		</div>
-		<h4 style="margin:20px 0 8px">Setup (deploy environment)</h4>
-		<ol class="muted" style="margin:0; padding-left:20px; font-size:13px; line-height:1.6">
-			<li>Create an Entra app registration with redirect URI <code>{GOTRUE_URL}/callback</code> (GoTrue, not the API).</li>
-			<li>Set in <code>deploy/.env</code>: <code>AZURE_ENABLED=true</code>, <code>AZURE_CLIENT_ID</code>, <code>AZURE_CLIENT_SECRET</code>, <code>AZURE_URL</code>.</li>
-			<li>Add client origins to <code>GOTRUE_URI_ALLOW_LIST</code> (web, Flutter web, <code>itam://sso-callback</code> for Android).</li>
-			<li>Restart auth: <code>docker compose restart auth</code></li>
-		</ol>
+
+		<h4 style="margin:20px 0 8px">1. Register the app in Entra</h4>
+		<p class="muted" style="margin:0 0 8px; font-size:13px">
+			Create an Entra app registration with this exact redirect URI:
+		</p>
+		<code style="display:block; padding:8px; background:var(--bg); border-radius:6px; font-size:12px">{azureRedirectUrl}</code>
+
+		<h4 style="margin:20px 0 8px">2. Configure here</h4>
+		<div class="field">
+			<label>Tenant ID</label>
+			<input bind:value={azureTenant} placeholder="00000000-0000-0000-0000-000000000000" disabled={!manageSettings} />
+		</div>
+		<div class="field">
+			<label>Client ID</label>
+			<input bind:value={azureClientId} placeholder="Application (client) ID" disabled={!manageSettings} />
+		</div>
+		<div class="field">
+			<label>Client secret</label>
+			<input
+				type="password"
+				bind:value={azureClientSecret}
+				placeholder={ssoEnabled ? '•••••••• (leave blank to keep current)' : 'Client secret value'}
+				disabled={!manageSettings}
+			/>
+		</div>
+		<div class="field">
+			<label><input type="checkbox" bind:checked={azureConfigEnabled} disabled={!manageSettings} /> Enable Microsoft sign-in</label>
+		</div>
+		{#if manageSettings}
+			<div class="row" style="margin-top:14px; align-items:center; gap:10px">
+				<button class="btn" onclick={saveAzureSettings}>Save</button>
+				{#if azureSaved}<span class="muted" style="color:var(--success)">{azureSaved}</span>{/if}
+			</div>
+		{/if}
+
 		<p class="muted" style="font-size:12px; margin:16px 0 0">
 			See <code>docs/azure-ad-sso.md</code>. The first user matching <code>ADMIN_EMAIL</code> becomes superuser on first login.
 		</p>

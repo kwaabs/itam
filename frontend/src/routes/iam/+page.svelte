@@ -183,7 +183,7 @@
 {:else if tab === 'users'}
 	<div class="card">
 		<h3 style="margin-top:0">Users</h3>
-		<p class="muted" style="margin-top:-6px">Users are provisioned automatically on first sign-in via GoTrue.</p>
+		<p class="muted" style="margin-top:-6px">Users are provisioned automatically on first sign-in.</p>
 		<table>
 			<thead><tr><th>Email</th><th>Superuser</th><th>Active</th><th>User ID</th></tr></thead>
 			<tbody>

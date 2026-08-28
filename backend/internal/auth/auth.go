@@ -1,9 +1,11 @@
 package auth
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/base64"
+	"encoding/hex"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -19,27 +21,62 @@ import (
 	"github.com/uptrace/bun"
 )
 
+const (
+	accessTokenTTL  = time.Hour
+	refreshTokenTTL = 30 * 24 * time.Hour
+)
+
+var (
+	// ErrInvalidCredentials covers both "no such user" and "wrong password" -
+	// deliberately not distinguished, so a failed login can't be used to
+	// enumerate valid emails.
+	ErrInvalidCredentials  = errors.New("invalid credentials")
+	ErrInvalidRefreshToken = errors.New("invalid refresh token")
+)
+
+// TokenPair is the response shape for local login/refresh/Azure SSO.
+type TokenPair struct {
+	AccessToken  string    `json:"access_token"`
+	RefreshToken string    `json:"refresh_token"`
+	ExpiresIn    int64     `json:"expires_in"`
+	User         *UserInfo `json:"user"`
+}
+
+type UserInfo struct {
+	ID    uuid.UUID `json:"id"`
+	Email string    `json:"email"`
+}
+
 type ctxKey string
 
 const principalKey ctxKey = "principal"
 
-// Principal is the authenticated caller derived from a GoTrue JWT.
+// Principal is the authenticated caller derived from the access token.
 type Principal struct {
 	UserID      uuid.UUID `json:"user_id"`
 	Email       string    `json:"email"`
 	IsSuperuser bool      `json:"is_superuser"`
 }
 
-// Service validates GoTrue tokens and provisions app profiles just-in-time.
+// SettingsReader is the subset of settings.Service that Azure SSO config
+// (tenant/client id/secret, all editable at runtime without a redeploy)
+// needs. Declared here rather than importing internal/settings so this
+// package doesn't depend on the settings package's storage/caching details.
+type SettingsReader interface {
+	GetOr(ctx context.Context, key, fallback string) string
+}
+
+// Service validates access tokens and provisions app profiles just-in-time.
 type Service struct {
 	cfg         config.Config
 	db          *bun.DB
 	log         *slog.Logger
+	set         SettingsReader
 	provisioned sync.Map // userID -> struct{}
 }
 
-func New(cfg config.Config, db *bun.DB, log *slog.Logger) *Service {
-	return &Service{cfg: cfg, db: db, log: log}
+func New(cfg config.Config, db *bun.DB, log *slog.Logger, set SettingsReader) *Service {
+	return &Service{cfg: cfg, db: db, log: log, set: set}
 }
 
 // Middleware authenticates the request and attaches the Principal to context.
@@ -79,7 +116,7 @@ func (s *Service) parse(raw string) (jwt.MapClaims, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("unexpected signing method")
 		}
-		return []byte(s.cfg.GoTrueJWTSecret), nil
+		return []byte(s.cfg.JWTSecret), nil
 	})
 	if err != nil {
 		return nil, err
@@ -170,62 +207,154 @@ func FromContext(ctx context.Context) (*Principal, bool) {
 	return p, ok
 }
 
-// BootstrapAdmin best-effort creates the configured admin user in GoTrue so the
-// instance is usable out of the box. Idempotent; tolerant of GoTrue not being
-// ready yet (retries a few times). Superuser/role wiring happens via JIT
-// provisioning on first login.
+// BootstrapAdmin idempotently creates the configured admin user directly in
+// iam.user_profiles so the instance is usable out of the box, and grants it
+// the admin role. Safe to call on every startup.
 func (s *Service) BootstrapAdmin(ctx context.Context) {
 	if s.cfg.AdminEmail == "" || s.cfg.AdminPassword == "" {
 		return
 	}
-	token, err := s.serviceToken()
+	hash, err := HashPassword(s.cfg.AdminPassword)
 	if err != nil {
-		s.log.Warn("could not mint service token for bootstrap", "err", err)
+		s.log.Error("could not hash bootstrap admin password", "err", err)
 		return
 	}
-	body, _ := json.Marshal(map[string]any{
-		"email":         s.cfg.AdminEmail,
-		"password":      s.cfg.AdminPassword,
-		"email_confirm": true,
-	})
-	url := strings.TrimRight(s.cfg.GoTrueURL, "/") + "/admin/users"
 
-	for attempt := 1; attempt <= 10; attempt++ {
-		req, _ := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
-		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Authorization", "Bearer "+token)
-		client := &http.Client{Timeout: 5 * time.Second}
-		resp, err := client.Do(req)
-		if err != nil {
-			time.Sleep(3 * time.Second)
-			continue
-		}
-		status := resp.StatusCode
-		_ = resp.Body.Close()
-		switch {
-		case status >= 200 && status < 300:
-			s.log.Info("bootstrap admin user created in GoTrue", "email", s.cfg.AdminEmail)
+	profile := &domain.UserProfile{
+		UserID:       uuid.New(),
+		Email:        s.cfg.AdminEmail,
+		PasswordHash: hash,
+		IsSuperuser:  true,
+		IsActive:     true,
+	}
+	res, err := s.db.NewInsert().Model(profile).On("CONFLICT (email) DO NOTHING").Exec(ctx)
+	if err != nil {
+		s.log.Error("bootstrap admin insert failed", "err", err)
+		return
+	}
+	userID := profile.UserID
+	if n, _ := res.RowsAffected(); n == 0 {
+		s.log.Info("bootstrap admin user already exists", "email", s.cfg.AdminEmail)
+		var existing domain.UserProfile
+		if err := s.db.NewSelect().Model(&existing).Where("email = ?", s.cfg.AdminEmail).Scan(ctx); err != nil {
+			s.log.Error("could not look up existing bootstrap admin", "err", err)
 			return
-		case status == http.StatusConflict || status == http.StatusUnprocessableEntity:
-			s.log.Info("bootstrap admin user already exists", "email", s.cfg.AdminEmail)
-			return
-		default:
-			s.log.Warn("bootstrap admin attempt failed", "status", status, "attempt", attempt)
-			time.Sleep(3 * time.Second)
 		}
+		userID = existing.UserID
+	} else {
+		s.log.Info("bootstrap admin user created", "email", s.cfg.AdminEmail)
+	}
+
+	if err := s.ensureAdminGrant(ctx, userID); err != nil {
+		s.log.Error("bootstrap admin role grant failed", "err", err)
 	}
 }
 
-// serviceToken mints a short-lived service_role JWT GoTrue accepts on its admin
-// API (it is signed with the shared secret).
-func (s *Service) serviceToken() (string, error) {
+// IssueAccessToken mints an access token for a local (password) or Azure SSO
+// login, signed with the shared JWT secret and verified by Middleware/parse().
+func (s *Service) IssueAccessToken(userID uuid.UUID, email string, ttl time.Duration) (string, error) {
 	claims := jwt.MapClaims{
-		"role": "service_role",
-		"sub":  "00000000-0000-0000-0000-000000000000",
-		"iss":  "itam-bootstrap",
-		"exp":  time.Now().Add(10 * time.Minute).Unix(),
-		"iat":  time.Now().Unix(),
+		"sub":   userID.String(),
+		"email": email,
+		"role":  "authenticated",
+		"iat":   time.Now().Unix(),
+		"exp":   time.Now().Add(ttl).Unix(),
 	}
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return t.SignedString([]byte(s.cfg.GoTrueJWTSecret))
+	return t.SignedString([]byte(s.cfg.JWTSecret))
+}
+
+// Login verifies email/password against iam.user_profiles and, on success,
+// issues a fresh access/refresh token pair.
+func (s *Service) Login(ctx context.Context, email, password string) (*TokenPair, error) {
+	var profile domain.UserProfile
+	err := s.db.NewSelect().Model(&profile).
+		Where("email = ?", email).
+		Where("is_active = true").
+		Scan(ctx)
+	if err != nil {
+		return nil, ErrInvalidCredentials
+	}
+	if profile.PasswordHash == "" || !VerifyPassword(profile.PasswordHash, password) {
+		return nil, ErrInvalidCredentials
+	}
+	return s.issuePair(ctx, profile.UserID, profile.Email)
+}
+
+// Refresh rotates a refresh token: the presented token is revoked and a new
+// pair is issued, so a stolen-but-already-used token stops working.
+func (s *Service) Refresh(ctx context.Context, refreshToken string) (*TokenPair, error) {
+	var rt domain.RefreshToken
+	err := s.db.NewSelect().Model(&rt).Where("token_hash = ?", hashToken(refreshToken)).Scan(ctx)
+	if err != nil {
+		return nil, ErrInvalidRefreshToken
+	}
+	if rt.RevokedAt != nil || time.Now().After(rt.ExpiresAt) {
+		return nil, ErrInvalidRefreshToken
+	}
+	if _, err := s.db.NewUpdate().Model((*domain.RefreshToken)(nil)).
+		Set("revoked_at = now()").Where("id = ?", rt.ID).Exec(ctx); err != nil {
+		return nil, err
+	}
+
+	var profile domain.UserProfile
+	if err := s.db.NewSelect().Model(&profile).
+		Where("user_id = ?", rt.UserID).
+		Where("is_active = true").
+		Scan(ctx); err != nil {
+		return nil, ErrInvalidRefreshToken
+	}
+	return s.issuePair(ctx, profile.UserID, profile.Email)
+}
+
+// Logout revokes a refresh token. Idempotent: revoking an already-revoked or
+// unknown token is not an error.
+func (s *Service) Logout(ctx context.Context, refreshToken string) error {
+	_, err := s.db.NewUpdate().Model((*domain.RefreshToken)(nil)).
+		Set("revoked_at = now()").
+		Where("token_hash = ?", hashToken(refreshToken)).
+		Where("revoked_at IS NULL").
+		Exec(ctx)
+	return err
+}
+
+func (s *Service) issuePair(ctx context.Context, userID uuid.UUID, email string) (*TokenPair, error) {
+	access, err := s.IssueAccessToken(userID, email, accessTokenTTL)
+	if err != nil {
+		return nil, err
+	}
+	refresh, err := generateOpaqueToken()
+	if err != nil {
+		return nil, err
+	}
+	rt := &domain.RefreshToken{
+		UserID:    userID,
+		TokenHash: hashToken(refresh),
+		ExpiresAt: time.Now().Add(refreshTokenTTL),
+	}
+	if _, err := s.db.NewInsert().Model(rt).Exec(ctx); err != nil {
+		return nil, err
+	}
+	return &TokenPair{
+		AccessToken:  access,
+		RefreshToken: refresh,
+		ExpiresIn:    int64(accessTokenTTL.Seconds()),
+		User:         &UserInfo{ID: userID, Email: email},
+	}, nil
+}
+
+// generateOpaqueToken returns a random URL-safe refresh token. Opaque (not a
+// JWT) and stored server-side hashed, mirroring GoTrue's own refresh tokens -
+// unlike access tokens, revocation has to be checkable without decoding.
+func generateOpaqueToken() (string, error) {
+	b := make([]byte, 32)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
+	}
+	return base64.RawURLEncoding.EncodeToString(b), nil
+}
+
+func hashToken(token string) string {
+	sum := sha256.Sum256([]byte(token))
+	return hex.EncodeToString(sum[:])
 }

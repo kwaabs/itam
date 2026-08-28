@@ -1176,6 +1176,7 @@ type UserProfile struct {
 	PersonID      *uuid.UUID `bun:"person_id" json:"person_id"`
 	IsSuperuser   bool       `bun:"is_superuser" json:"is_superuser"`
 	IsActive      bool       `bun:"is_active" json:"is_active"`
+	PasswordHash  string     `bun:"password_hash,nullzero" json:"-"`
 	CreatedAt     time.Time  `bun:"created_at,nullzero" json:"created_at"`
 	UpdatedAt     time.Time  `bun:"updated_at,nullzero" json:"updated_at"`
 }
@@ -1212,6 +1213,18 @@ type RoleGrant struct {
 	CreatedAt     time.Time `bun:"created_at,nullzero" json:"created_at"`
 
 	Role *Role `bun:"rel:belongs-to,join:role_id=id" json:"role,omitempty"`
+}
+
+// RefreshToken backs local (password) auth session rotation, replacing
+// GoTrue's auth.refresh_tokens.
+type RefreshToken struct {
+	bun.BaseModel `bun:"table:iam.refresh_tokens,alias:rt"`
+	ID            uuid.UUID  `bun:"id,pk,type:uuid,default:gen_random_uuid()" json:"id"`
+	UserID        uuid.UUID  `bun:"user_id" json:"user_id"`
+	TokenHash     string     `bun:"token_hash" json:"-"`
+	ExpiresAt     time.Time  `bun:"expires_at" json:"expires_at"`
+	RevokedAt     *time.Time `bun:"revoked_at" json:"revoked_at,omitempty"`
+	CreatedAt     time.Time  `bun:"created_at,nullzero" json:"created_at"`
 }
 
 // ---------------------------------------------------------------------------

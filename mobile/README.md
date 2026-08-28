@@ -4,9 +4,10 @@ A lightweight companion app for **manual field work** against the ITAM backend:
 scan an asset, view it, make quick changes — plus search, "near me", check
 in/out, stocktake, stock receiving, stores, and creating assets on the spot.
 
-It talks to the **existing** ITAM API and authenticates against GoTrue with
-email/password. The only backend additions it relies on are the `subtree`
-asset filter and the `/api/field-config` endpoint (both already shipped).
+It talks to the **existing** ITAM API and authenticates against it directly
+with email/password (or Microsoft SSO). The only backend additions it relies
+on are the `subtree` asset filter and the `/api/field-config` endpoint (both
+already shipped).
 
 ## Features
 
@@ -41,7 +42,7 @@ No local Flutter SDK needed. From the `mobile/` folder:
 
 This uses `ghcr.io/cirruslabs/flutter:stable` to run `flutter pub get` and serve
 the app headlessly (`-d web-server`) on **http://localhost:5609**. The app runs
-in *your* browser, so it calls the ITAM API/GoTrue on `localhost` directly. The
+in *your* browser, so it calls the ITAM API on `localhost` directly. The
 API already allows `http://localhost:5609` for CORS.
 
 > The container only compiles + serves the bundle; the camera, GPS and map all
@@ -60,7 +61,6 @@ flutter run -d chrome --web-port 5609
 The setup screen asks for:
 
 - **API base URL** — default `http://localhost:5607`
-- **GoTrue (auth) URL** — default `http://localhost:5606`
 
 Then sign in with your ITAM credentials (e.g. the bootstrap admin).
 
@@ -75,7 +75,7 @@ flutter run -d <device-or-emulator>
 ```
 
 Host addresses:
-- **Emulator**: use `http://10.0.2.2:5607` / `:5606` (maps to your PC's localhost).
+- **Emulator**: use `http://10.0.2.2:5607` (maps to your PC's localhost).
 - **Physical phone**: use your PC's LAN IP; ensure the phone can reach it.
 
 The manifest already requests the permissions the app needs
