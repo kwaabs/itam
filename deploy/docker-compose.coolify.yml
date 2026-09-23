@@ -69,8 +69,8 @@ services:
   # Goose migrations. Runs once, applies all SQL, then exits.
   migrate:
     build:
-      context: ./deploy
-      dockerfile: goose.Dockerfile
+      context: ./backend
+      dockerfile: ../deploy/goose.Dockerfile
     container_name: itam-migrate
     depends_on:
       db:

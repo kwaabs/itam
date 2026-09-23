@@ -7,7 +7,7 @@ RUN apk add --no-cache ca-certificates curl \
       -o /usr/local/bin/goose \
  && chmod +x /usr/local/bin/goose
 
-COPY backend/migrations /migrations
+COPY migrations /migrations
 
 WORKDIR /migrations
 
