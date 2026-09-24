@@ -20,6 +20,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
       # Single-file mount so we add to (not shadow) the image's own init scripts.
+      - pgsodium_key:/etc/postgresql-custom
       - ./deploy/initdb/zzz-itam-roles.sh:/docker-entrypoint-initdb.d/zzz-itam-roles.sh:ro
     healthcheck:
       # Probe the TCP listener (only up after the full init + migrate.sh finishes)
@@ -125,6 +126,9 @@ services:
 
 volumes:
   db_data:
+  pgsodium_key:
+    external: true
+    name: itam-pgsodium-key
   valkey_data:
   nats_data:
   rustfs_data:
