@@ -3,11 +3,10 @@
 	import { goto } from '$app/navigation';
 	import { apiGet, apiPost, apiPut, apiDelete } from '$lib/api';
 	import { me, can } from '$lib/me';
-	import type { Person, OrgUnit, Asset, Paginated, CustodyReport } from '$lib/types';
+	import type { Person, OrgUnit, Asset, Paginated } from '$lib/types';
 
 	let people = $state<Person[]>([]);
 	let orgUnits = $state<OrgUnit[]>([]);
-	let custody = $state<CustodyReport | null>(null);
 	let loading = $state(true);
 	let error = $state('');
 
@@ -30,7 +29,36 @@
 
 	const byId = $derived(new Map(people.map((p) => [p.id, p])));
 	const ouById = $derived(new Map(orgUnits.map((o) => [o.id, o])));
-	const heldCount = $derived(new Map((custody?.by_holder ?? []).map((h) => [h.person_id, h.count])));
+	let q = $state('');
+	let fOrg = $state('');
+	let fStatus = $state('');
+	let fHolding = $state('');
+
+	const filtered = $derived.by(() => {
+		const term = q.trim().toLowerCase();
+		return people.filter((p) => {
+			if (term) {
+				const hay = [p.first_name, p.last_name, `${p.first_name} ${p.last_name}`, p.email, p.title, p.employee_no, fullName(p.manager_id)]
+					.join(' ')
+					.toLowerCase();
+				if (!hay.includes(term)) return false;
+			}
+			if (fOrg === '__none') {
+				if (p.org_unit_id) return false;
+			} else if (fOrg && p.org_unit_id !== fOrg) return false;
+			if (fStatus && String(p.is_active) !== fStatus) return false;
+			if (fHolding === 'yes' && !(p.asset_count ?? 0)) return false;
+			if (fHolding === 'no' && (p.asset_count ?? 0)) return false;
+			return true;
+		});
+	});
+	const hasFilters = $derived(!!(q || fOrg || fStatus || fHolding));
+	function clearFilters() {
+		q = '';
+		fOrg = '';
+		fStatus = '';
+		fHolding = '';
+	}
 	const canReadAssets = $derived(can($me, 'asset.read'));
 
 	async function load() {
@@ -147,7 +175,8 @@
 {#if error}<p class="error">{error}</p>{/if}
 
 {#if showForm}
-	<div class="card" style="margin-bottom:16px">
+	<div class="modal-backdrop" role="presentation">
+		<div class="modal" role="dialog" aria-modal="true" aria-label={editId ? 'Edit person' : 'New person'} style="max-width:640px">
 		<h3 style="margin-top:0">{editId ? 'Edit person' : 'New person'}</h3>
 		<form onsubmit={save}>
 			<div class="grid cols-2">
@@ -185,6 +214,7 @@
 				<button class="btn secondary" type="button" onclick={() => (showForm = false)}>Cancel</button>
 			</div>
 		</form>
+		</div>
 	</div>
 {/if}
 
@@ -223,16 +253,45 @@
 	</div>
 {/if}
 
+<div class="card" style="margin-bottom:12px">
+	<div class="row" style="gap:8px; flex-wrap:wrap; align-items:center">
+		<input
+			type="search"
+			placeholder="Search name, email, title, employee no…"
+			bind:value={q}
+			style="flex:1; min-width:220px"
+		/>
+		<select bind:value={fOrg}>
+			<option value="">All org units</option>
+			<option value="__none">No org unit</option>
+			{#each orgUnits as o}<option value={o.id}>{o.name}</option>{/each}
+		</select>
+		<select bind:value={fStatus}>
+			<option value="">Any status</option>
+			<option value="true">Active</option>
+			<option value="false">Inactive</option>
+		</select>
+		<select bind:value={fHolding}>
+			<option value="">Any assets</option>
+			<option value="yes">Holding assets</option>
+			<option value="no">Holding none</option>
+		</select>
+		{#if hasFilters}<button class="btn secondary small" onclick={clearFilters}>Clear</button>{/if}
+		<span class="muted" style="font-size:12px">{filtered.length} of {people.length}</span>
+	</div>
+</div>
+
 <div class="card">
 	{#if loading}
 		<p class="muted">Loading…</p>
 	{:else}
+		<div class="table-scroll">
 		<table>
 			<thead>
 				<tr><th>Name</th><th>Title</th><th>Org unit</th><th>Manager</th><th>Assets</th><th>Status</th><th></th></tr>
 			</thead>
 			<tbody>
-				{#each people as p}
+				{#each filtered as p}
 					<tr>
 						<td>{p.first_name} {p.last_name}<div class="muted" style="font-size:12px">{p.email || ''}</div></td>
 						<td>{p.title || '—'}</td>
@@ -241,7 +300,7 @@
 						<td>
 							{#if canReadAssets}
 								<button class="btn secondary small" onclick={() => showAssets(p)}>
-									{heldCount.get(p.id) ?? 0} held
+									{p.asset_count ?? 0} held
 								</button>
 							{:else}
 								—
@@ -260,10 +319,25 @@
 						</td>
 					</tr>
 				{/each}
-				{#if people.length === 0}
-					<tr><td colspan="7" class="muted">No people yet.</td></tr>
+				{#if filtered.length === 0}
+					<tr><td colspan="7" class="muted">{people.length === 0 ? 'No people yet.' : 'No people match the filters.'}</td></tr>
 				{/if}
 			</tbody>
 		</table>
+		</div>
 	{/if}
 </div>
+
+<style>
+	.table-scroll {
+		max-height: calc(100vh - 340px);
+		min-height: 240px;
+		overflow: auto;
+	}
+	.table-scroll :global(thead th) {
+		position: sticky;
+		top: 0;
+		background: var(--surface);
+		z-index: 1;
+	}
+</style>
