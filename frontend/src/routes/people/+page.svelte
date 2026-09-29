@@ -250,7 +250,7 @@
 </div>
 
 <div class="split" class:open={!!assetsFor}>
-<div class="main">
+<div class="tbl-col">
 <div class="card">
 	{#if loading}
 		<p class="muted">Loading…</p>
@@ -357,6 +357,8 @@
 	.split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; }
 	.split.open { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); }
 	.side { position: sticky; top: 12px; margin: 0; }
+	.tbl-col { min-width: 0; }
+	.side h3 { font-size: 15px; }
 	.side-scroll { max-height: calc(100vh - 340px); overflow: auto; }
 	.table-scroll :global(td), .table-scroll :global(th) { padding-top: 6px; padding-bottom: 6px; }
 	@media (max-width: 900px) {
