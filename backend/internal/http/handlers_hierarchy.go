@@ -360,7 +360,35 @@ func (s *Server) handleListPeople(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	writeJSON(w, http.StatusOK, people)
+
+	// Held-asset counts for every person (not just top holders).
+	var counts []struct {
+		PersonID string `bun:"person_id"`
+		Count    int    `bun:"count"`
+	}
+	if err := s.db.NewRaw(
+		`SELECT assigned_person_id::text AS person_id, count(*) AS count
+		   FROM core.assets
+		  WHERE deleted_at IS NULL AND assigned_person_id IS NOT NULL
+		  GROUP BY assigned_person_id`,
+	).Scan(r.Context(), &counts); err != nil {
+		writeErr(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	held := make(map[string]int, len(counts))
+	for _, c := range counts {
+		held[c.PersonID] = c.Count
+	}
+
+	type personOut struct {
+		domain.Person
+		AssetCount int `json:"asset_count"`
+	}
+	out := make([]personOut, 0, len(people))
+	for _, p := range people {
+		out = append(out, personOut{Person: p, AssetCount: held[p.ID.String()]})
+	}
+	writeJSON(w, http.StatusOK, out)
 }
 
 func (s *Server) handleCreatePerson(w http.ResponseWriter, r *http.Request) {

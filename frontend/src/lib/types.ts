@@ -137,6 +137,7 @@ export interface Person {
 	org_unit_id: string | null;
 	manager_id: string | null;
 	is_active: boolean;
+	asset_count?: number;
 }
 
 export interface Asset {
