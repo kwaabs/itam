@@ -67,9 +67,6 @@
 		try {
 			people = await apiGet<Person[]>('/api/people');
 			orgUnits = await apiGet<OrgUnit[]>('/api/org-units');
-			if (can($me, 'report.read')) {
-				custody = await apiGet<CustodyReport>('/api/reports/custody');
-			}
 		} catch (e) {
 			error = e instanceof Error ? e.message : 'Failed to load';
 		} finally {
@@ -218,69 +215,42 @@
 	</div>
 {/if}
 
-{#if assetsFor}
-	<div class="card" style="margin-bottom:16px">
-		<div class="row" style="justify-content:space-between; align-items:center">
-			<h3 style="margin:0">Assets held by {assetsFor.first_name} {assetsFor.last_name}</h3>
-			<button class="btn secondary small" onclick={() => (assetsFor = null)}>Close</button>
+<div class="card" style="margin-bottom:12px; padding:12px">
+	<div class="filters">
+		<div class="field"><label>Search</label><input type="search" placeholder="Name, email, title, employee no…" bind:value={q} /></div>
+		<div class="field">
+			<label>Org unit</label>
+			<select bind:value={fOrg}>
+				<option value="">All</option>
+				<option value="__none">No org unit</option>
+				{#each orgUnits as o}<option value={o.id}>{o.name}</option>{/each}
+			</select>
 		</div>
-		{#if assetsLoading}
-			<p class="muted">Loading…</p>
-		{:else if heldAssets.length === 0}
-			<p class="muted">No assets currently assigned.</p>
-		{:else}
-			<table style="margin-top:12px">
-				<thead><tr><th>Tag</th><th>Name</th><th>Type</th><th>State</th><th>Location</th></tr></thead>
-				<tbody>
-					{#each heldAssets as a}
-						<tr
-							class="click"
-							role="button"
-							tabindex="0"
-							onclick={() => goto(`/assets/${a.id}`)}
-							onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), goto(`/assets/${a.id}`))}
-						>
-							<td>{a.asset_tag}</td>
-							<td>{a.name}</td>
-							<td>{a.asset_type?.name ?? '—'}</td>
-							<td>{a.current_state?.label ?? '—'}</td>
-							<td>{a.location?.name ?? '—'}</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		{/if}
-	</div>
-{/if}
-
-<div class="card" style="margin-bottom:12px">
-	<div class="row" style="gap:8px; flex-wrap:wrap; align-items:center">
-		<input
-			type="search"
-			placeholder="Search name, email, title, employee no…"
-			bind:value={q}
-			style="flex:1; min-width:220px"
-		/>
-		<select bind:value={fOrg}>
-			<option value="">All org units</option>
-			<option value="__none">No org unit</option>
-			{#each orgUnits as o}<option value={o.id}>{o.name}</option>{/each}
-		</select>
-		<select bind:value={fStatus}>
-			<option value="">Any status</option>
-			<option value="true">Active</option>
-			<option value="false">Inactive</option>
-		</select>
-		<select bind:value={fHolding}>
-			<option value="">Any assets</option>
-			<option value="yes">Holding assets</option>
-			<option value="no">Holding none</option>
-		</select>
-		{#if hasFilters}<button class="btn secondary small" onclick={clearFilters}>Clear</button>{/if}
-		<span class="muted" style="font-size:12px">{filtered.length} of {people.length}</span>
+		<div class="field">
+			<label>Status</label>
+			<select bind:value={fStatus}>
+				<option value="">Any</option>
+				<option value="true">Active</option>
+				<option value="false">Inactive</option>
+			</select>
+		</div>
+		<div class="field">
+			<label>Assets</label>
+			<select bind:value={fHolding}>
+				<option value="">Any</option>
+				<option value="yes">Holding assets</option>
+				<option value="no">Holding none</option>
+			</select>
+		</div>
+		<div class="filter-meta">
+			<span class="muted" style="font-size:12px">{filtered.length} of {people.length}</span>
+			{#if hasFilters}<button class="btn secondary small" onclick={clearFilters}>Clear</button>{/if}
+		</div>
 	</div>
 </div>
 
+<div class="split" class:open={!!assetsFor}>
+<div class="main">
 <div class="card">
 	{#if loading}
 		<p class="muted">Loading…</p>
@@ -327,6 +297,42 @@
 		</div>
 	{/if}
 </div>
+</div>
+{#if assetsFor}
+	<aside class="card side">
+		<div class="row" style="justify-content:space-between; align-items:center">
+			<h3 style="margin:0">Assets held by {assetsFor.first_name} {assetsFor.last_name}</h3>
+			<button class="btn secondary small" onclick={() => (assetsFor = null)}>Close</button>
+		</div>
+		{#if assetsLoading}
+			<p class="muted">Loading…</p>
+		{:else if heldAssets.length === 0}
+			<p class="muted">No assets currently assigned.</p>
+		{:else}
+			<div class="side-scroll"><table style="margin-top:12px">
+				<thead><tr><th>Tag</th><th>Name</th><th>Type</th><th>State</th><th>Location</th></tr></thead>
+				<tbody>
+					{#each heldAssets as a}
+						<tr
+							class="click"
+							role="button"
+							tabindex="0"
+							onclick={() => goto(`/assets/${a.id}`)}
+							onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), goto(`/assets/${a.id}`))}
+						>
+							<td>{a.asset_tag}</td>
+							<td>{a.name}</td>
+							<td>{a.asset_type?.name ?? '—'}</td>
+							<td>{a.current_state?.label ?? '—'}</td>
+							<td>{a.location?.name ?? '—'}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table></div>
+		{/if}
+	</aside>
+{/if}
+</div>
 
 <style>
 	.table-scroll {
@@ -339,5 +345,22 @@
 		top: 0;
 		background: var(--surface);
 		z-index: 1;
+	}
+	.filters {
+		display: grid;
+		grid-template-columns: 2fr 1.5fr 1fr 1fr auto;
+		gap: 10px;
+		align-items: end;
+	}
+	.filters :global(.field) { margin: 0; }
+	.filter-meta { display: flex; gap: 8px; align-items: center; padding-bottom: 8px; white-space: nowrap; }
+	.split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; }
+	.split.open { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); }
+	.side { position: sticky; top: 12px; margin: 0; }
+	.side-scroll { max-height: calc(100vh - 340px); overflow: auto; }
+	.table-scroll :global(td), .table-scroll :global(th) { padding-top: 6px; padding-bottom: 6px; }
+	@media (max-width: 900px) {
+		.filters { grid-template-columns: 1fr 1fr; }
+		.split.open { grid-template-columns: minmax(0, 1fr); }
 	}
 </style>
