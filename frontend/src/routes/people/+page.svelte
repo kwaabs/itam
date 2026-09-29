@@ -250,7 +250,7 @@
 </div>
 
 <div class="split" class:open={!!assetsFor}>
-<div class="main">
+<div class="tbl-col">
 <div class="card">
 	{#if loading}
 		<p class="muted">Loading…</p>
@@ -310,7 +310,7 @@
 			<p class="muted">No assets currently assigned.</p>
 		{:else}
 			<div class="side-scroll"><table style="margin-top:12px">
-				<thead><tr><th>Tag</th><th>Name</th><th>Type</th><th>State</th><th>Location</th></tr></thead>
+				<thead><tr><th>Tag</th><th>Name</th><th>Type</th><th>State</th></tr></thead>
 				<tbody>
 					{#each heldAssets as a}
 						<tr
@@ -324,8 +324,7 @@
 							<td>{a.name}</td>
 							<td>{a.asset_type?.name ?? '—'}</td>
 							<td>{a.current_state?.label ?? '—'}</td>
-							<td>{a.location?.name ?? '—'}</td>
-						</tr>
+							</tr>
 					{/each}
 				</tbody>
 			</table></div>
@@ -355,8 +354,11 @@
 	.filters :global(.field) { margin: 0; }
 	.filter-meta { display: flex; gap: 8px; align-items: center; padding-bottom: 8px; white-space: nowrap; }
 	.split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; }
-	.split.open { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); }
+	.split.open { grid-template-columns: minmax(0, 1fr) minmax(340px, 440px); }
 	.side { position: sticky; top: 12px; margin: 0; }
+	.tbl-col { min-width: 0; }
+	.side h3 { font-size: 15px; }
+	.side :global(td), .side :global(th) { white-space: nowrap; }
 	.side-scroll { max-height: calc(100vh - 340px); overflow: auto; }
 	.table-scroll :global(td), .table-scroll :global(th) { padding-top: 6px; padding-bottom: 6px; }
 	@media (max-width: 900px) {
